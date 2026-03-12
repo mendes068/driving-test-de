@@ -161,12 +161,6 @@
     #scoreScreen { display: none; }
     #scoreScreen.show { display: block; }
 
-    @keyframes drawPath {
-      from { stroke-dashoffset: 500; }
-      to   { stroke-dashoffset: 0; }
-    }
-    .animated-arrow { stroke-dasharray: 500; animation: drawPath .7s ease forwards; }
-
     @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
     .fade-in { animation: fadeIn .35s ease forwards; }
   </style>
@@ -287,7 +281,7 @@ const T = {
 const ALL_QUESTIONS = [
   // DRIVING
   { cat:'driving', de:'An der Ampel rechts abbiegen.',
-    visual:{type:'direction',dir:'right',label:{pt:'Virar à direita no semáforo',en:'Turn right at the traffic light'}},
+    visual:{type:'image',src:'img/kreuzung.jpg',label:{pt:'Cruzamento com semáforo — Alemanha',en:'Intersection with traffic light — Germany'}},
     answers:[
       {pt:'Virar à DIREITA no próximo semáforo.',en:'Turn RIGHT at the next traffic light.',correct:true,tip:{pt:'Abbiegen=virar | rechts=direita | Ampel=semáforo.',en:'Abbiegen=turn | rechts=right | Ampel=traffic light.'}},
       {pt:'Virar à esquerda no próximo semáforo.',en:'Turn left at the next traffic light.',correct:false},
@@ -295,7 +289,7 @@ const ALL_QUESTIONS = [
       {pt:'Parar antes do semáforo e aguardar instrução.',en:'Stop before the light and wait.',correct:false},
     ]},
   { cat:'driving', de:'An der Ampel links abbiegen.',
-    visual:{type:'direction',dir:'left',label:{pt:'Virar à esquerda no semáforo',en:'Turn left at the traffic light'}},
+    visual:{type:'image',src:'img/kreuzung.jpg',label:{pt:'Cruzamento com semáforo — Alemanha',en:'Intersection with traffic light — Germany'}},
     answers:[
       {pt:'Virar à ESQUERDA no próximo semáforo.',en:'Turn LEFT at the next traffic light.',correct:true,tip:{pt:'Links=esquerda. Atenção ao tráfego oposto.',en:'Links=left. Watch for oncoming traffic.'}},
       {pt:'Virar à direita no próximo semáforo.',en:'Turn right at the next traffic light.',correct:false},
@@ -303,7 +297,6 @@ const ALL_QUESTIONS = [
       {pt:'Continuar reto até o próximo cruzamento.',en:'Continue straight to the next intersection.',correct:false},
     ]},
   { cat:'driving', de:'Die nächste Möglichkeit rechts abbiegen.',
-    visual:{type:'direction',dir:'right',label:{pt:'Próxima oportunidade à direita',en:'Next opportunity to the right'}},
     answers:[
       {pt:'Virar à DIREITA na PRÓXIMA oportunidade possível (não precisa ser semáforo).',en:'Turn RIGHT at the NEXT available opportunity (not necessarily a traffic light).',correct:true,tip:{pt:'Nächste Möglichkeit=próxima possibilidade. Qualquer rua lateral conta.',en:'Nächste Möglichkeit=next possibility. Any side street counts.'}},
       {pt:'Virar à direita somente no próximo semáforo.',en:'Turn right only at the next traffic light.',correct:false},
@@ -311,7 +304,6 @@ const ALL_QUESTIONS = [
       {pt:'Aguardar o examinador repetir a instrução.',en:'Wait for the examiner to repeat the instruction.',correct:false},
     ]},
   { cat:'driving', de:'Die nächste Möglichkeit links abbiegen.',
-    visual:{type:'direction',dir:'left',label:{pt:'Próxima oportunidade à esquerda',en:'Next opportunity to the left'}},
     answers:[
       {pt:'Virar à ESQUERDA na PRÓXIMA oportunidade possível.',en:'Turn LEFT at the NEXT available opportunity.',correct:true,tip:{pt:'Mesmo conceito: qualquer rua lateral à esquerda.',en:'Same concept: any side street to the left.'}},
       {pt:'Virar à esquerda somente em vias sinalizadas.',en:'Turn left only on signposted roads.',correct:false},
@@ -319,7 +311,6 @@ const ALL_QUESTIONS = [
       {pt:'Continuar até o examinador falar novamente.',en:'Continue until the examiner speaks again.',correct:false},
     ]},
   { cat:'driving', de:'Auf die Autobahn Richtung Hamburg auffahren.',
-    visual:{type:'direction',dir:'highway-on',label:{pt:'Entrar na Autobahn → Hamburgo',en:'Enter the Autobahn → Hamburg'}},
     answers:[
       {pt:'Entrar na AUTOESTRADA (Autobahn) na direção de Hamburgo.',en:'Enter the MOTORWAY (Autobahn) towards Hamburg.',correct:true,tip:{pt:'Auffahren=entrar na rodovia. Ceder passagem à pista principal.',en:'Auffahren=to join motorway. Give way to traffic on the main lane.'}},
       {pt:'Sair da autoestrada na direção de Hamburgo.',en:'Exit the motorway towards Hamburg.',correct:false},
@@ -327,7 +318,6 @@ const ALL_QUESTIONS = [
       {pt:'Parar no acostamento e aguardar instrução.',en:'Stop on the hard shoulder and wait.',correct:false},
     ]},
   { cat:'driving', de:'Die nächste Ausfahrt verlassen.',
-    visual:{type:'direction',dir:'highway-off',label:{pt:'Próxima saída da Autobahn',en:'Next motorway exit'}},
     answers:[
       {pt:'Pegar a PRÓXIMA SAÍDA da autoestrada/via rápida.',en:'Take the NEXT EXIT from the motorway.',correct:true,tip:{pt:'Ausfahrt=saída. Verlassen=sair. Sinalizar e reduzir na rampa.',en:'Ausfahrt=exit. Verlassen=to leave. Signal and slow down on the ramp.'}},
       {pt:'Ignorar a próxima saída e continuar na rodovia.',en:'Ignore the next exit and stay on the motorway.',correct:false},
@@ -335,7 +325,6 @@ const ALL_QUESTIONS = [
       {pt:'Reduzir velocidade mas permanecer na pista principal.',en:'Slow down but remain on the main lane.',correct:false},
     ]},
   { cat:'driving', de:'Die Ausfahrt Richtung Beusselstraße verlassen.',
-    visual:{type:'direction',dir:'highway-off',label:{pt:'Saída → Beusselstraße',en:'Exit → Beusselstraße'}},
     answers:[
       {pt:'Pegar a saída indicada para a BEUSSELSTRASSE.',en:'Take the exit signposted towards BEUSSELSTRASSE.',correct:true,tip:{pt:'Identificada pela placa com o nome. Sinalizar com antecedência.',en:'Identified by the sign with the name. Signal in advance.'}},
       {pt:'Continuar até a saída seguinte e então virar.',en:'Continue to the next exit and then turn.',correct:false},
@@ -343,7 +332,6 @@ const ALL_QUESTIONS = [
       {pt:'Virar à direita assim que ver a placa.',en:'Turn right as soon as you see the sign.',correct:false},
     ]},
   { cat:'driving', de:'Bitte suchen Sie eine Möglichkeit zum Parken.',
-    visual:{type:'direction',dir:'park',label:{pt:'Procurar local de estacionamento',en:'Look for a parking spot'}},
     answers:[
       {pt:'Procurar um LOCAL PERMITIDO para estacionar e parar o veículo.',en:'Find a PERMITTED SPOT to park and stop the vehicle.',correct:true,tip:{pt:'Escolher local legal, sem bloquear saídas ou faixas de pedestres.',en:'Choose a legal spot — do not block driveways or crossings.'}},
       {pt:'Estacionar imediatamente onde estiver.',en:'Park immediately wherever you are.',correct:false},
@@ -351,7 +339,7 @@ const ALL_QUESTIONS = [
       {pt:'Procurar estacionamento pago somente.',en:'Look for paid parking only.',correct:false},
     ]},
   { cat:'driving', de:'Bitte suchen Sie eine Möglichkeit zum Umkehren.',
-    visual:{type:'direction',dir:'uturn',label:{pt:'Procurar local para retorno',en:'Look for a place to turn around'}},
+    visual:{type:'image',src:'img/abbiegung.jpg',label:{pt:'Placa de retorno permitido — Alemanha',en:'U-turn permitted sign — Germany'}},
     answers:[
       {pt:'Procurar um local ADEQUADO para fazer RETORNO com segurança.',en:'Find a SUITABLE PLACE to make a safe U-TURN.',correct:true,tip:{pt:'Pode ser entrada de garagem, rua lateral ou área de retorno.',en:'Can be a driveway, side street, or turning area.'}},
       {pt:'Fazer retorno imediatamente no local onde estiver.',en:'Make a U-turn immediately where you are.',correct:false},
@@ -359,7 +347,7 @@ const ALL_QUESTIONS = [
       {pt:'Procurar um estacionamento para virar o carro.',en:'Look for a car park to turn around.',correct:false},
     ]},
   { cat:'driving', de:'Umkehren bitte.',
-    visual:{type:'direction',dir:'uturn',label:{pt:'Fazer retorno o mais breve possível',en:'Make a U-turn as soon as safely possible'}},
+    visual:{type:'image',src:'img/abbiegung.jpg',label:{pt:'Placa de retorno permitido — Alemanha',en:'U-turn permitted sign — Germany'}},
     answers:[
       {pt:'Fazer RETORNO o mais breve possível de forma segura.',en:'Make a U-TURN as soon as safely possible.',correct:true,tip:{pt:'Sinalizar, verificar espelhos e fazer o retorno na primeira oportunidade segura.',en:'Signal, check mirrors, turn around at the first safe opportunity.'}},
       {pt:'Parar o veículo imediatamente.',en:'Stop the vehicle immediately.',correct:false},
@@ -367,7 +355,7 @@ const ALL_QUESTIONS = [
       {pt:'Aguardar semáforo para fazer o retorno.',en:'Wait for a traffic light to make the U-turn.',correct:false},
     ]},
   { cat:'driving', de:'Rechts abbiegen bitte.',
-    visual:{type:'direction',dir:'right',label:{pt:'Virar à direita',en:'Turn right'}},
+    visual:{type:'image',src:'img/abbiegung.jpg',label:{pt:'Estrada com placas de conversão — Alemanha',en:'Road with turn signs — Germany'}},
     answers:[
       {pt:'Virar à DIREITA na próxima oportunidade segura.',en:'Turn RIGHT at the next safe opportunity.',correct:true,tip:{pt:'Comando simples de direção à direita.',en:'Simple right-turn instruction.'}},
       {pt:'Virar à esquerda na próxima oportunidade.',en:'Turn left at the next opportunity.',correct:false},
@@ -375,7 +363,7 @@ const ALL_QUESTIONS = [
       {pt:'Virar à direita somente se houver semáforo.',en:'Turn right only if there is a traffic light.',correct:false},
     ]},
   { cat:'driving', de:'Links abbiegen bitte.',
-    visual:{type:'direction',dir:'left',label:{pt:'Virar à esquerda',en:'Turn left'}},
+    visual:{type:'image',src:'img/abbiegung.jpg',label:{pt:'Estrada com placas de conversão — Alemanha',en:'Road with turn signs — Germany'}},
     answers:[
       {pt:'Virar à ESQUERDA na próxima oportunidade segura.',en:'Turn LEFT at the next safe opportunity.',correct:true,tip:{pt:'Atenção ao tráfego vindo no sentido contrário.',en:'Watch for oncoming traffic.'}},
       {pt:'Virar à direita na próxima oportunidade.',en:'Turn right at the next opportunity.',correct:false},
@@ -383,7 +371,7 @@ const ALL_QUESTIONS = [
       {pt:'Virar à esquerda somente em via de mão única.',en:'Turn left only on one-way streets.',correct:false},
     ]},
   { cat:'driving', de:'An der zweiten Ampel bitte rechts abbiegen.',
-    visual:{type:'direction',dir:'right',label:{pt:'2º semáforo → direita',en:'2nd traffic light → right'}},
+    visual:{type:'image',src:'img/kreuzung.jpg',label:{pt:'Cruzamento com semáforo — Alemanha',en:'Intersection with traffic light — Germany'}},
     answers:[
       {pt:'Passar pelo PRIMEIRO semáforo e virar à DIREITA no SEGUNDO semáforo.',en:'Pass the FIRST traffic light and turn RIGHT at the SECOND.',correct:true,tip:{pt:'Zweiten=segundo/a. Contar os semáforos em sequência.',en:'Zweiten=second. Count the traffic lights in sequence.'}},
       {pt:'Virar à direita no primeiro semáforo encontrado.',en:'Turn right at the first traffic light encountered.',correct:false},
@@ -391,7 +379,7 @@ const ALL_QUESTIONS = [
       {pt:'Virar no semáforo que estiver verde.',en:'Turn at whichever traffic light is green.',correct:false},
     ]},
   { cat:'driving', de:'An der zweiten Ampel bitte links abbiegen.',
-    visual:{type:'direction',dir:'left',label:{pt:'2º semáforo → esquerda',en:'2nd traffic light → left'}},
+    visual:{type:'image',src:'img/kreuzung.jpg',label:{pt:'Cruzamento com semáforo — Alemanha',en:'Intersection with traffic light — Germany'}},
     answers:[
       {pt:'Passar pelo PRIMEIRO semáforo e virar à ESQUERDA no SEGUNDO semáforo.',en:'Pass the FIRST traffic light and turn LEFT at the SECOND.',correct:true,tip:{pt:'Zweiten=segundo/a. Contar os semáforos em sequência.',en:'Zweiten=second. Count the traffic lights in sequence.'}},
       {pt:'Virar à esquerda no primeiro semáforo encontrado.',en:'Turn left at the first traffic light encountered.',correct:false},
@@ -400,7 +388,7 @@ const ALL_QUESTIONS = [
     ]},
   // VEHICLE
   { cat:'vehicle', de:'Bitte kontrollieren Sie die Kühlflüssigkeit.',
-    visual:{type:'image',src:'img/coolant.png',label:{pt:'Reservatório de arrefecimento — capô aberto, motor FRIO',en:'Coolant reservoir — hood open, engine COLD'}},
+    visual:{type:'image',src:'img/coolant.png',label:{pt:'Reservatório de arrefecimento — motor FRIO',en:'Coolant reservoir — engine COLD'}},
     answers:[
       {pt:'Verificar o nível no RESERVATÓRIO TRANSLÚCIDO (motor FRIO), entre as marcas MIN e MAX.',en:'Check the level in the TRANSLUCENT RESERVOIR (engine COLD), between MIN and MAX marks.',correct:true,tip:{pt:'NUNCA abrir o radiador com motor quente. O reservatório plástico permite ver externamente.',en:'NEVER open the radiator cap when hot. The plastic reservoir allows external level check.'}},
       {pt:'Abrir o radiador com o motor quente e verificar.',en:'Open the radiator cap when hot and check.',correct:false},
@@ -408,7 +396,6 @@ const ALL_QUESTIONS = [
       {pt:'Medir com a vareta de óleo.',en:'Measure with the oil dipstick.',correct:false},
     ]},
   { cat:'vehicle', de:'Bitte kontrollieren Sie den Ölstand.',
-    visual:{type:'component',part:'oil',label:{pt:'Vareta de óleo (Ölpeilstab) — motor frio',en:'Oil dipstick (Ölpeilstab) — cold engine'}},
     answers:[
       {pt:'Retirar a VARETA, limpar, inserir totalmente, retirar e verificar nível entre MIN e MAX.',en:'Pull out DIPSTICK, wipe clean, reinsert fully, pull out again, check level between MIN and MAX.',correct:true,tip:{pt:'Motor frio ou 5 min desligado. Duas marcas: mínimo e máximo.',en:'Cold engine or 5 min off. Two marks: minimum and maximum.'}},
       {pt:'Verificar pelo reservatório plástico ao lado do motor.',en:'Check via the plastic reservoir next to the engine.',correct:false},
@@ -424,7 +411,6 @@ const ALL_QUESTIONS = [
       {pt:'Usar somente água destilada pura.',en:'Use only pure distilled water.',correct:false},
     ]},
   { cat:'vehicle', de:'Wo sind die Rückstrahler am Fahrzeug?',
-    visual:{type:'component',part:'reflectors',label:{pt:'Refletores traseiros (🔴 vermelho) e laterais (🟠 laranja)',en:'Rear reflectors (🔴 red) and side reflectors (🟠 orange)'}},
     answers:[
       {pt:'Na parte TRASEIRA (vermelho) e nas laterais/rodas (laranja) — refletem luz sem energia própria.',en:'On the REAR (red) and sides/wheels (orange) — they reflect light without their own power.',correct:true,tip:{pt:'Rückstrahler=refletores passivos. Não emitem luz, apenas refletem.',en:'Rückstrahler=passive reflectors. They do not emit light, only reflect it.'}},
       {pt:'Apenas na frente do veículo, integrados aos faróis.',en:'Only at the front, integrated into the headlights.',correct:false},
@@ -432,7 +418,6 @@ const ALL_QUESTIONS = [
       {pt:'Apenas dentro do porta-malas como equipamento.',en:'Only inside the boot as safety equipment.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist die Mindestprofiltiefe bei Reifen?',
-    visual:{type:'component',part:'tire',label:{pt:'Profundidade mínima do sulco: 1,6 mm',en:'Minimum tread depth: 1.6 mm'}},
     answers:[
       {pt:'1,6 mm — profundidade mínima legal do sulco do pneu.',en:'1.6 mm — minimum legal tread depth.',correct:true,tip:{pt:'Abaixo de 1,6 mm é ilegal. Recomendado trocar com 3 mm.',en:'Below 1.6 mm is illegal. Experts recommend replacing at 3 mm.'}},
       {pt:'2,4 mm',en:'2.4 mm',correct:false},
@@ -440,7 +425,6 @@ const ALL_QUESTIONS = [
       {pt:'0,8 mm',en:'0.8 mm',correct:false},
     ]},
   { cat:'vehicle', de:'Was bedeutet das Alpine-Zeichen (3PMSF) auf Winterreifen?',
-    visual:{type:'component',part:'alpine',label:{pt:'Símbolo Alpine (3PMSF) no flanco do pneu',en:'Alpine symbol (3PMSF) on tyre sidewall'}},
     answers:[
       {pt:'MONTANHA COM FLOCO DE NEVE: certifica aprovação para condições severas de neve e inverno.',en:'MOUNTAIN WITH SNOWFLAKE: certifies approval for severe snow and winter conditions.',correct:true,tip:{pt:'M+S sem este símbolo não é suficiente na Alemanha.',en:'M+S without this symbol is not sufficient in Germany.'}},
       {pt:'Etiqueta azul para baixas temperaturas.',en:'Blue label for low temperatures.',correct:false},
@@ -448,7 +432,6 @@ const ALL_QUESTIONS = [
       {pt:'Símbolo M+S básico sem certificação.',en:'Basic M+S symbol without certification.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist das Standlicht?',
-    visual:{type:'light',icon:'standlicht',color:'#58a6ff',label:{pt:'Luz de posição / estacionamento',en:'Position / parking light'}},
     answers:[
       {pt:'LUZ DE POSIÇÃO: pequenas luzes que indicam a presença do veículo sem iluminar a via.',en:'POSITION LIGHT: small lights indicating vehicle presence without illuminating the road.',correct:true,tip:{pt:'Não substitui o farol baixo.',en:'Does not replace the low beam headlight.'}},
       {pt:'Luz de freio.',en:'Brake light.',correct:false},
@@ -456,7 +439,6 @@ const ALL_QUESTIONS = [
       {pt:'Luz de ré.',en:'Reverse light.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist das Abblendlicht?',
-    visual:{type:'light',icon:'abblendlicht',color:'#58a6ff',label:{pt:'Farol baixo (Abblendlicht)',en:'Low beam (dipped headlight)'}},
     answers:[
       {pt:'FAROL BAIXO: iluminação padrão noturna, regulada para não ofuscar quem vem no sentido contrário.',en:'LOW BEAM: standard night driving light, angled to avoid dazzling oncoming drivers.',correct:true,tip:{pt:'Obrigatório à noite e em túneis.',en:'Required at night and in tunnels.'}},
       {pt:'Farol alto.',en:'High beam.',correct:false},
@@ -464,7 +446,6 @@ const ALL_QUESTIONS = [
       {pt:'Luz de posição.',en:'Position light.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist der Nebelscheinwerfer?',
-    visual:{type:'light',icon:'nebel-front',color:'#e3b341',label:{pt:'Farol de neblina dianteiro',en:'Front fog light'}},
     answers:[
       {pt:'FAROL DE NEBLINA DIANTEIRO: usado em neblina densa, chuva forte ou neve.',en:'FRONT FOG LIGHT: used in dense fog, heavy rain or snow.',correct:true,tip:{pt:'Só usar quando visibilidade for inferior a 50 m.',en:'Only use when visibility is below 50 m.'}},
       {pt:'Luz de neblina traseira (vermelha).',en:'Rear fog light (red).',correct:false},
@@ -472,7 +453,6 @@ const ALL_QUESTIONS = [
       {pt:'Luz de posição adicional.',en:'Additional position light.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist die Nebelschlussleuchte?',
-    visual:{type:'light',icon:'nebel-rear',color:'#f85149',label:{pt:'Luz de neblina traseira (vermelha)',en:'Rear fog light (red)'}},
     answers:[
       {pt:'LUZ DE NEBLINA TRASEIRA (vermelha intensa): melhora visibilidade traseira em neblina densa.',en:'REAR FOG LIGHT (intense red): improves rear visibility in dense fog.',correct:true,tip:{pt:'Schluss=traseiro. Não confundir com luz de freio.',en:'Schluss=rear. Do not confuse with brake light.'}},
       {pt:'Farol de neblina dianteiro.',en:'Front fog light.',correct:false},
@@ -480,7 +460,6 @@ const ALL_QUESTIONS = [
       {pt:'Luz de emergência piscante.',en:'Flashing emergency light.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist das Fernlicht?',
-    visual:{type:'light',icon:'fernlicht',color:'#58a6ff',label:{pt:'Farol alto (Fernlicht)',en:'High beam (full beam)'}},
     answers:[
       {pt:'FAROL ALTO: estradas escuras sem tráfego próximo. Apagar ao encontrar outros veículos.',en:'HIGH BEAM: dark roads with no nearby traffic. Must be switched off when meeting vehicles.',correct:true,tip:{pt:'Fern=longo. Reduzir para Abblendlicht quando há veículo à frente.',en:'Fern=far. Switch to Abblendlicht when there is a vehicle ahead.'}},
       {pt:'Farol baixo reforçado.',en:'Reinforced low beam.',correct:false},
@@ -488,7 +467,6 @@ const ALL_QUESTIONS = [
       {pt:'Luz de cruzamento especial.',en:'Special crossing light.',correct:false},
     ]},
   { cat:'vehicle', de:'Was ist die Lichthupe?',
-    visual:{type:'light',icon:'lichthupe',color:'#58a6ff',label:{pt:'Pisca do farol alto (flash)',en:'Headlight flash (Lichthupe)'}},
     answers:[
       {pt:'PISCA DO FAROL ALTO (flash): sinal luminoso momentâneo para alertar outros motoristas.',en:'HEADLIGHT FLASH: a brief flash of the high beam to warn other road users.',correct:true,tip:{pt:'Lichthupe ≠ buzina. Sinal de aviso luminoso.',en:'Lichthupe ≠ horn. It is a light warning signal.'}},
       {pt:'Buzina luminosa integrada ao painel.',en:'Light-up horn on the dashboard.',correct:false},
@@ -496,7 +474,6 @@ const ALL_QUESTIONS = [
       {pt:'Farol alto com sinal sonoro.',en:'High beam with sound signal.',correct:false},
     ]},
   { cat:'vehicle', de:'Wann benutzt man das Warnblinklicht? (SUPA)',
-    visual:{type:'light',icon:'warnblink',color:'#e3b341',label:{pt:'SUPA: Stau · Unfall · Panne · Abschleppen',en:'SUPA: Stau · Unfall · Panne · Abschleppen'}},
     answers:[
       {pt:'Stau (congestionamento), Unfall (acidente), Panne (pane), Abschleppen (reboque).',en:'Stau (traffic jam), Unfall (accident), Panne (breakdown), Abschleppen (towing).',correct:true,tip:{pt:'SUPA: memorizar os 4 casos. Nunca usar para parar em zona proibida.',en:'SUPA: remember the 4 cases. Never use just to stop in a no-stopping zone.'}},
       {pt:'Somente em caso de acidente com vítimas.',en:'Only in case of accident with casualties.',correct:false},
@@ -675,252 +652,13 @@ if(window.speechSynthesis) speechSynthesis.getVoices();
 function renderVisual(q){
   if(!q.visual) return;
   const box=document.getElementById('visualBox'), v=q.visual;
-  let html='';
-  if     (v.type==='direction') html=directionSVG(v.dir);
-  else if(v.type==='light')     html=lightSVG(v.icon,v.color);
-  else if(v.type==='component') html=componentSVG(v.part);
-  else if(v.type==='image')     html=`<img src="${v.src}" alt="${v.label[lang]}" style="max-width:100%;border-radius:8px;">`;
-  if(html){ box.innerHTML=html+`<div class="visual-label">${v.label[lang]}</div>`; box.classList.add('show'); }
+  box.innerHTML=`<img src="${v.src}" alt="${v.label[lang]}" style="max-width:100%;border-radius:8px;"><div class="visual-label">${v.label[lang]}</div>`;
+  box.classList.add('show');
 }
 
-// Direction SVGs
-function directionSVG(dir){
-  const r='#2d333b',l='#444',a='#3fb950',w=5;
-  const svgs={
-    right:`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="75" y="0"  width="50" height="160" fill="${r}"/>
-      <rect x="75" y="70" width="125" height="50"  fill="${r}"/>
-      <line x1="100" y1="4"   x2="100" y2="62" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <line x1="140" y1="95" x2="196" y2="95" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <circle cx="100" cy="30" r="8" fill="#e3b341" opacity=".9"/>
-      <circle cx="100" cy="30" r="5" fill="#e3b341"/>
-      <path class="animated-arrow" d="M100,148 L100,95 Q100,78 117,78 L190,78" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="190,70 190,86 204,78" fill="${a}"/>
-    </svg>`,
-    left:`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="75"  y="0"   width="50" height="160" fill="${r}"/>
-      <rect x="0"   y="70"  width="125" height="50"  fill="${r}"/>
-      <line x1="100" y1="4"   x2="100" y2="62" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <line x1="60"  y1="95" x2="4"   y2="95" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <circle cx="100" cy="30" r="8" fill="#e3b341" opacity=".9"/>
-      <circle cx="100" cy="30" r="5" fill="#e3b341"/>
-      <path class="animated-arrow" d="M100,148 L100,95 Q100,78 83,78 L10,78" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="10,70 10,86 -4,78" fill="${a}"/>
-    </svg>`,
-    uturn:`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="75"  y="0" width="50" height="160" fill="${r}"/>
-      <rect x="115" y="0" width="50" height="160" fill="${r}"/>
-      <line x1="100" y1="0" x2="100" y2="160" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <line x1="140" y1="0" x2="140" y2="160" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <path class="animated-arrow" d="M90,148 L90,70 Q90,35 140,35 Q185,35 185,75 L185,110 L55,110" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="55,102 55,118 41,110" fill="${a}"/>
-    </svg>`,
-    park:`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="75" y="0" width="50" height="160" fill="${r}"/>
-      <rect x="0"  y="0" width="75" height="160" fill="#1a2030" rx="4"/>
-      <line x1="100" y1="0" x2="100" y2="160" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <text x="37" y="100" font-size="60" font-weight="bold" fill="${a}" font-family="sans-serif" text-anchor="middle" opacity=".9">P</text>
-      <path class="animated-arrow" d="M100,148 L100,105 L55,105" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="55,97 55,113 41,105" fill="${a}"/>
-    </svg>`,
-    'highway-on':`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="110" y="0" width="90" height="160" fill="${r}"/>
-      <rect x="0"   y="110" width="150" height="50" fill="${r}"/>
-      <line x1="155" y1="0" x2="155" y2="160" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <text x="155" y="60" font-size="11" fill="#8b949e" text-anchor="middle" font-family="sans-serif">AUTOBAHN</text>
-      <path class="animated-arrow" d="M30,135 Q100,135 130,90 L130,10" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="122,10 138,10 130,-4" fill="${a}"/>
-    </svg>`,
-    'highway-off':`<svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" fill="#161b22" rx="10"/>
-      <rect x="0"  y="0"   width="90" height="160" fill="${r}"/>
-      <rect x="50" y="110" width="150" height="50" fill="${r}"/>
-      <line x1="45" y1="0" x2="45" y2="160" stroke="${l}" stroke-width="2" stroke-dasharray="10,7"/>
-      <text x="45" y="60" font-size="11" fill="#8b949e" text-anchor="middle" font-family="sans-serif">AUTOBAHN</text>
-      <path class="animated-arrow" d="M45,10 L45,90 Q45,135 90,135 L190,135" stroke="${a}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="190,127 190,143 204,135" fill="${a}"/>
-    </svg>`,
-  };
-  return svgs[dir]||'';
-}
 
-// Light icon SVGs
-function lightSVG(icon,color){
-  const bg='#0d1117';
-  const icons={
-    standlicht:`<svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="120" height="80" fill="${bg}" rx="8"/>
-      <circle cx="60" cy="40" r="14" fill="none" stroke="${color}" stroke-width="4"/>
-      <line x1="60" y1="10" x2="60" y2="19" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="60" y1="61" x2="60" y2="70" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="30" y1="40" x2="39" y2="40" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="81" y1="40" x2="90" y2="40" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="39" y1="19" x2="45" y2="25" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="75" y1="55" x2="81" y2="61" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="81" y1="19" x2="75" y2="25" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="45" y1="55" x2="39" y2="61" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-    </svg>`,
-    abblendlicht:`<svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="160" height="80" fill="${bg}" rx="8"/>
-      <ellipse cx="38" cy="40" rx="22" ry="26" fill="none" stroke="${color}" stroke-width="3.5"/>
-      <line x1="62" y1="24" x2="148" y2="36" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="62" y1="38" x2="148" y2="50" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="62" y1="52" x2="148" y2="64" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="62" y1="40" x2="62" y2="58" stroke="${color}" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-    </svg>`,
-    fernlicht:`<svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="160" height="80" fill="${bg}" rx="8"/>
-      <ellipse cx="38" cy="40" rx="22" ry="26" fill="none" stroke="${color}" stroke-width="3.5"/>
-      <line x1="64" y1="26" x2="150" y2="26" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="64" y1="40" x2="150" y2="40" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="64" y1="54" x2="150" y2="54" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-    </svg>`,
-    lichthupe:`<svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="160" height="80" fill="${bg}" rx="8"/>
-      <ellipse cx="38" cy="40" rx="22" ry="26" fill="none" stroke="${color}" stroke-width="3.5"/>
-      <line x1="64" y1="26" x2="150" y2="26" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="64" y1="40" x2="150" y2="40" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="64" y1="54" x2="150" y2="54" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <text x="107" y="18" font-size="10" fill="${color}" font-family="sans-serif" text-anchor="middle" font-weight="bold">FLASH</text>
-    </svg>`,
-    'nebel-front':`<svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="160" height="80" fill="${bg}" rx="8"/>
-      <ellipse cx="38" cy="40" rx="22" ry="26" fill="none" stroke="${color}" stroke-width="3.5"/>
-      <path d="M65,22 Q72,32 65,42 Q72,52 65,62" stroke="${color}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <line x1="76" y1="26" x2="148" y2="36" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="76" y1="40" x2="148" y2="50" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="76" y1="54" x2="148" y2="64" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-    </svg>`,
-    'nebel-rear':`<svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="160" height="80" fill="${bg}" rx="8"/>
-      <rect x="10" y="14" width="44" height="52" rx="5" fill="${color}" opacity=".15" stroke="${color}" stroke-width="3.5"/>
-      <rect x="18" y="22" width="28" height="36" rx="3" fill="${color}" opacity=".25"/>
-      <path d="M62,22 Q69,32 62,42 Q69,52 62,62" stroke="${color}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <line x1="74" y1="26" x2="148" y2="36" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="74" y1="40" x2="148" y2="50" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="74" y1="54" x2="148" y2="64" stroke="${color}" stroke-width="3.5" stroke-linecap="round"/>
-    </svg>`,
-    warnblink:`<svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="120" height="100" fill="${bg}" rx="8"/>
-      <polygon points="60,8 108,88 12,88" fill="none" stroke="${color}" stroke-width="6" stroke-linejoin="round"/>
-      <text x="60" y="80" font-size="44" font-weight="bold" fill="${color}" font-family="sans-serif" text-anchor="middle">!</text>
-    </svg>`,
-  };
-  return icons[icon]||'';
-}
 
-// Vehicle component SVGs — annotated engine bay schematic
-function componentSVG(part){
-  // Annotated top-down engine bay schematic
-  const engineBay=(highlight)=>`<svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
-    <rect width="280" height="200" fill="#0d1117" rx="10"/>
-    <!-- windshield -->
-    <rect x="10" y="10" width="260" height="24" rx="4" fill="#1a2a3a" stroke="#2a4a6a" stroke-width="1.5"/>
-    <text x="140" y="26" font-size="10" fill="#58a6ff" font-family="sans-serif" text-anchor="middle" opacity=".7">Windschutzscheibe</text>
-    <!-- engine bay border -->
-    <rect x="10" y="38" width="260" height="152" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
-    <!-- ENGINE block -->
-    <rect x="60" y="90" width="160" height="80" rx="6" fill="#21262d" stroke="#444" stroke-width="1.5"/>
-    <text x="140" y="136" font-size="11" fill="#555" font-family="sans-serif" text-anchor="middle">MOTOR</text>
-    <!-- WASHER RESERVOIR top-left -->
-    <rect x="16" y="44" width="70" height="42" rx="5" fill="${highlight==='washer'?'#1a2a4a':'#1a2030'}" stroke="${highlight==='washer'?'#58a6ff':'#333'}" stroke-width="${highlight==='washer'?2.5:1.5}"/>
-    <text x="51" y="62" font-size="8" fill="${highlight==='washer'?'#58a6ff':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='washer'?'bold':'normal'}">Scheiben-</text>
-    <text x="51" y="74" font-size="8" fill="${highlight==='washer'?'#58a6ff':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='washer'?'bold':'normal'}">wischwasser</text>
-    <!-- wiper icon -->
-    <path d="M30,82 Q51,76 72,82" stroke="${highlight==='washer'?'#58a6ff':'#444'}" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <!-- COOLANT top-right -->
-    <rect x="194" y="44" width="76" height="42" rx="5" fill="${highlight==='coolant'?'#1a3a2a':'#1a2030'}" stroke="${highlight==='coolant'?'#3fb950':'#333'}" stroke-width="${highlight==='coolant'?2.5:1.5}"/>
-    <text x="232" y="62" font-size="8" fill="${highlight==='coolant'?'#3fb950':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='coolant'?'bold':'normal'}">Kühl-</text>
-    <text x="232" y="74" font-size="8" fill="${highlight==='coolant'?'#3fb950':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='coolant'?'bold':'normal'}">flüssigkeit</text>
-    <!-- MIN/MAX lines -->
-    <line x1="198" y1="76" x2="266" y2="76" stroke="${highlight==='coolant'?'#3fb950':'#444'}" stroke-width="1.5" stroke-dasharray="4,3"/>
-    <text x="270" y="79" font-size="7" fill="${highlight==='coolant'?'#3fb950':'#555'}" font-family="sans-serif">MAX</text>
-    <!-- OIL DIPSTICK center-left -->
-    <rect x="16" y="94" width="40" height="72" rx="5" fill="${highlight==='oil'?'#3a2a10':'#1a2030'}" stroke="${highlight==='oil'?'#e3b341':'#333'}" stroke-width="${highlight==='oil'?2.5:1.5}"/>
-    <text x="36" y="118" font-size="7.5" fill="${highlight==='oil'?'#e3b341':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='oil'?'bold':'normal'}">Öl-</text>
-    <text x="36" y="130" font-size="7.5" fill="${highlight==='oil'?'#e3b341':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='oil'?'bold':'normal'}">peil-</text>
-    <text x="36" y="142" font-size="7.5" fill="${highlight==='oil'?'#e3b341':'#555'}" font-family="sans-serif" text-anchor="middle" font-weight="${highlight==='oil'?'bold':'normal'}">stab</text>
-    <!-- dipstick line -->
-    <line x1="36" y1="150" x2="36" y2="162" stroke="${highlight==='oil'?'#e3b341':'#555'}" stroke-width="2" stroke-linecap="round"/>
-    <line x1="28" y1="155" x2="44" y2="155" stroke="${highlight==='oil'?'#e3b341':'#555'}" stroke-width="1.5"/>
-    <line x1="28" y1="162" x2="44" y2="162" stroke="${highlight==='oil'?'#e3b341':'#555'}" stroke-width="1.5"/>
-    <!-- Front label -->
-    <text x="140" y="187" font-size="9" fill="#444" font-family="sans-serif" text-anchor="middle">↑  FRENTE DO CARRO  ↑</text>
-  </svg>`;
 
-  const rearView=`<svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="280" height="180" fill="#0d1117" rx="10"/>
-    <!-- car rear outline -->
-    <rect x="30" y="30" width="220" height="110" rx="12" fill="#161b22" stroke="#30363d" stroke-width="2"/>
-    <!-- rear window -->
-    <rect x="70" y="40" width="140" height="55" rx="6" fill="#1a2a3a" stroke="#2a4a6a" stroke-width="1.5"/>
-    <!-- rear lights -->
-    <rect x="30" y="70" width="40" height="40" rx="6" fill="#3a1010" stroke="#f85149" stroke-width="2"/>
-    <rect x="210" y="70" width="40" height="40" rx="6" fill="#3a1010" stroke="#f85149" stroke-width="2"/>
-    <!-- REAR REFLECTORS (red) highlighted -->
-    <rect x="34" y="104" width="32" height="10" rx="3" fill="#f85149" stroke="#fff" stroke-width="1.5" opacity=".9"/>
-    <rect x="214" y="104" width="32" height="10" rx="3" fill="#f85149" stroke="#fff" stroke-width="1.5" opacity=".9"/>
-    <!-- bumper -->
-    <rect x="30" y="120" width="220" height="20" rx="4" fill="#21262d" stroke="#444" stroke-width="1.5"/>
-    <!-- SIDE reflectors (orange) -->
-    <rect x="30" y="55" width="12" height="20" rx="3" fill="#e3b341" stroke="#fff" stroke-width="1.5" opacity=".9"/>
-    <rect x="238" y="55" width="12" height="20" rx="3" fill="#e3b341" stroke="#fff" stroke-width="1.5" opacity=".9"/>
-    <!-- Labels -->
-    <text x="50" y="148" font-size="8" fill="#f85149" font-family="sans-serif" text-anchor="middle" font-weight="bold">🔴 Traseiro</text>
-    <text x="230" y="148" font-size="8" fill="#f85149" font-family="sans-serif" text-anchor="middle" font-weight="bold">🔴 Traseiro</text>
-    <text x="14" y="55" font-size="7" fill="#e3b341" font-family="sans-serif" text-anchor="middle">🟠</text>
-    <text x="266" y="55" font-size="7" fill="#e3b341" font-family="sans-serif" text-anchor="middle">🟠</text>
-    <text x="140" y="172" font-size="9" fill="#555" font-family="sans-serif" text-anchor="middle">Vista traseira do veículo</text>
-  </svg>`;
-
-  const tireSVG=(isAlpine)=>`<svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="280" height="180" fill="#0d1117" rx="10"/>
-    <!-- tyre outer -->
-    <circle cx="100" cy="90" r="70" fill="#1a1a1a" stroke="#30363d" stroke-width="3"/>
-    <!-- tread blocks -->
-    ${[0,30,60,90,120,150,180,210,240,270,300,330].map(deg=>{
-      const r1=70,r2=55,cx=100,cy=90;
-      const a1=deg*Math.PI/180,a2=(deg+20)*Math.PI/180;
-      const x1=cx+r1*Math.cos(a1),y1=cy+r1*Math.sin(a1);
-      const x2=cx+r1*Math.cos(a2),y2=cy+r1*Math.sin(a2);
-      const x3=cx+r2*Math.cos(a2),y3=cy+r2*Math.sin(a2);
-      const x4=cx+r2*Math.cos(a1),y4=cy+r2*Math.sin(a1);
-      return `<path d="M${x1},${y1} A${r1},${r1} 0 0,1 ${x2},${y2} L${x3},${y3} A${r2},${r2} 0 0,0 ${x4},${y4} Z" fill="#222" stroke="#333" stroke-width="1"/>`;
-    }).join('')}
-    <!-- rim -->
-    <circle cx="100" cy="90" r="42" fill="#21262d" stroke="#444" stroke-width="2"/>
-    <circle cx="100" cy="90" r="18" fill="#161b22" stroke="#555" stroke-width="1.5"/>
-    <!-- tread depth indicator -->
-    <line x1="142" y1="90" x2="170" y2="90" stroke="#3fb950" stroke-width="3" stroke-linecap="round"/>
-    <text x="168" y="86" font-size="9" fill="#3fb950" font-family="sans-serif">↕ 1,6 mm min.</text>
-    ${isAlpine?`
-    <!-- Alpine symbol -->
-    <text x="100" y="95" font-size="22" font-family="sans-serif" text-anchor="middle">🏔</text>
-    <!-- 3PMSF label -->
-    <rect x="160" y="100" width="110" height="50" rx="6" fill="#1f3a5f" stroke="#1f6feb" stroke-width="1.5"/>
-    <text x="215" y="120" font-size="10" fill="#58a6ff" font-family="sans-serif" text-anchor="middle" font-weight="bold">3PMSF</text>
-    <text x="215" y="134" font-size="8" fill="#8b949e" font-family="sans-serif" text-anchor="middle">Alpine Zeichen</text>
-    <text x="215" y="146" font-size="8" fill="#8b949e" font-family="sans-serif" text-anchor="middle">obrigatório na Alemanha</text>
-    `:`
-    <rect x="160" y="100" width="110" height="40" rx="6" fill="#1a3a1f" stroke="#3fb950" stroke-width="1.5"/>
-    <text x="215" y="118" font-size="10" fill="#3fb950" font-family="sans-serif" text-anchor="middle" font-weight="bold">Mín. 1,6 mm</text>
-    <text x="215" y="133" font-size="8" fill="#6e9f6e" font-family="sans-serif" text-anchor="middle">recomendado: 3 mm</text>
-    `}
-  </svg>`;
-
-  if(part==='coolant') return engineBay('coolant');
-  if(part==='oil')     return engineBay('oil');
-  if(part==='washer')  return engineBay('washer');
-  if(part==='reflectors') return rearView;
-  if(part==='tire')    return tireSVG(false);
-  if(part==='alpine')  return tireSVG(true);
-  return '';
-}
 </script>
 </body>
 </html>
