@@ -90,23 +90,35 @@
       font-weight: 700;
       color: #f0f6fc;
       line-height: 1.4;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      transition: filter .3s;
     }
-    .speak-btn {
+    .question-de.hidden {
+      filter: blur(10px);
+      user-select: none;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .speak-btn, .reveal-btn {
       background: none;
       border: 1px solid #30363d;
       border-radius: 8px;
       color: #8b949e;
       cursor: pointer;
       font-size: .8rem;
-      padding: 4px 12px;
-      margin-bottom: 22px;
+      padding: 6px 14px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: border-color .2s, color .2s;
     }
-    .speak-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .speak-btn:hover  { border-color: #58a6ff; color: #58a6ff; }
+    .reveal-btn:hover { border-color: #e3b341; color: #e3b341; }
 
     /* Answers */
     .answers {
@@ -269,8 +281,11 @@
 
   <div class="card" id="card">
     <span class="category-badge" id="catBadge"></span>
-    <div class="question-de" id="questionDE"></div>
-    <button class="speak-btn" onclick="speak()" id="speakBtn">🔊 Ouvir em alemão</button>
+    <div class="question-de hidden" id="questionDE"></div>
+    <div class="btn-row">
+      <button class="speak-btn" onclick="speak()">🔊 Ouvir em alemão</button>
+      <button class="reveal-btn" id="revealBtn" onclick="toggleReveal()">👁 Revelar pergunta</button>
+    </div>
     <div class="answers" id="answers"></div>
     <div class="feedback" id="feedback"></div>
     <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Próxima pergunta →</button>
@@ -424,13 +439,24 @@ const ALL_QUESTIONS = [
   },
   {
     cat: "driving",
-    de: "An der zweiten Ampel bitte abbiegen.",
+    de: "An der zweiten Ampel bitte rechts abbiegen.",
     answers: [
-      { pt: "Passar pelo PRIMEIRO semáforo e virar no SEGUNDO semáforo.", correct: true,
-        tip: "Zweiten = segundo/a. Contar os semáforos em sequência e virar no segundo." },
-      { pt: "Virar no primeiro semáforo encontrado.", correct: false },
+      { pt: "Passar pelo primeiro semáforo e virar à DIREITA no SEGUNDO semáforo.", correct: true,
+        tip: "Zweiten = segundo/a. Contar os semáforos em sequência e virar à direita no segundo." },
+      { pt: "Virar à direita no primeiro semáforo encontrado.", correct: false },
+      { pt: "Virar à esquerda no segundo semáforo.", correct: false },
+      { pt: "Virar à direita no semáforo que estiver verde.", correct: false },
+    ]
+  },
+  {
+    cat: "driving",
+    de: "An der zweiten Ampel bitte links abbiegen.",
+    answers: [
+      { pt: "Passar pelo primeiro semáforo e virar à ESQUERDA no SEGUNDO semáforo.", correct: true,
+        tip: "Zweiten = segundo/a. Contar os semáforos em sequência e virar à esquerda no segundo." },
+      { pt: "Virar à esquerda no primeiro semáforo encontrado.", correct: false },
+      { pt: "Virar à direita no segundo semáforo.", correct: false },
       { pt: "Contar dois cruzamentos e virar, com ou sem semáforo.", correct: false },
-      { pt: "Virar no semáforo que estiver verde.", correct: false },
     ]
   },
 
@@ -623,8 +649,12 @@ function renderQuestion() {
   badge.className = 'category-badge ' + (q.cat === 'driving' ? 'cat-driving' : 'cat-vehicle');
   badge.textContent = q.cat === 'driving' ? 'Instrução de Direção' : 'Verificação do Veículo';
 
-  // Question
-  document.getElementById('questionDE').textContent = q.de;
+  // Question — hidden by default
+  const qEl = document.getElementById('questionDE');
+  qEl.textContent = q.de;
+  qEl.classList.add('hidden');
+  const revealBtn = document.getElementById('revealBtn');
+  revealBtn.textContent = '👁 Revelar pergunta';
 
   // Answers
   const wrap = document.getElementById('answers');
@@ -642,6 +672,18 @@ function renderQuestion() {
   fb.className = 'feedback';
   fb.textContent = '';
   document.getElementById('nextBtn').className = 'next-btn';
+}
+
+function toggleReveal() {
+  const qEl = document.getElementById('questionDE');
+  const revealBtn = document.getElementById('revealBtn');
+  if (qEl.classList.contains('hidden')) {
+    qEl.classList.remove('hidden');
+    revealBtn.textContent = '🙈 Ocultar pergunta';
+  } else {
+    qEl.classList.add('hidden');
+    revealBtn.textContent = '👁 Revelar pergunta';
+  }
 }
 
 function selectAnswer(idx) {
@@ -709,7 +751,7 @@ function restart() {
 // ── Text-to-speech (German) ─────────────────────────────────────────────
 function speak() {
   if (!window.speechSynthesis) return;
-  const text = document.getElementById('questionDE').textContent;
+  const text = questions[current].de;
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = 'de-DE';
   utt.rate = 0.9;
