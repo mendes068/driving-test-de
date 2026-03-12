@@ -6,7 +6,6 @@
   <title>Simulado – Prova Prática de Direção Alemã</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
       background: #0d1117;
@@ -15,164 +14,132 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px;
+      padding: 20px 14px 40px;
     }
-
     header {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #f0f6fc;
-      letter-spacing: .5px;
-    }
-    header p {
-      color: #8b949e;
-      font-size: .875rem;
-      margin-top: 4px;
-    }
-
-    /* ── Progress ── */
-    .progress-wrap {
       width: 100%;
       max-width: 680px;
-      margin-bottom: 20px;
-    }
-    .progress-meta {
       display: flex;
       justify-content: space-between;
-      font-size: .8rem;
-      color: #8b949e;
-      margin-bottom: 6px;
+      align-items: center;
+      margin-bottom: 24px;
     }
-    .progress-bar {
-      height: 6px;
+    header h1 { font-size: 1.2rem; font-weight: 700; }
+    header p  { font-size: .78rem; color: #8b949e; margin-top: 2px; }
+    .lang-btn {
       background: #21262d;
-      border-radius: 999px;
-      overflow: hidden;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #c9d1d9;
+      cursor: pointer;
+      font-size: .8rem;
+      padding: 6px 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color .2s;
     }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #238636, #3fb950);
-      border-radius: 999px;
-      transition: width .4s ease;
-    }
+    .lang-btn:hover { border-color: #58a6ff; color: #58a6ff; }
 
-    /* ── Card ── */
+    /* Progress */
+    .progress-wrap { width: 100%; max-width: 680px; margin-bottom: 16px; }
+    .progress-meta { display: flex; justify-content: space-between; font-size: .8rem; color: #8b949e; margin-bottom: 6px; }
+    .progress-bar  { height: 6px; background: #21262d; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg,#238636,#3fb950); border-radius: 999px; transition: width .4s ease; }
+
+    /* Card */
     .card {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 14px;
-      padding: 28px 28px 24px;
+      padding: 24px 22px 20px;
       width: 100%;
       max-width: 680px;
       box-shadow: 0 8px 32px rgba(0,0,0,.4);
     }
-
     .category-badge {
       display: inline-block;
-      font-size: .72rem;
+      font-size: .7rem;
       font-weight: 600;
       letter-spacing: .6px;
       text-transform: uppercase;
       padding: 3px 10px;
       border-radius: 999px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .cat-driving  { background: #1f3a5f; color: #58a6ff; border: 1px solid #1f6feb; }
-    .cat-vehicle  { background: #3a1f1f; color: #f78166; border: 1px solid #7d2a2a; }
+    .cat-driving { background:#1f3a5f; color:#58a6ff; border:1px solid #1f6feb; }
+    .cat-vehicle { background:#3a1f1f; color:#f78166; border:1px solid #7d2a2a; }
 
-    /* German question */
     .question-de {
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #f0f6fc;
       line-height: 1.4;
       margin-bottom: 12px;
       transition: filter .3s;
     }
-    .question-de.hidden {
-      filter: blur(10px);
-      user-select: none;
-    }
+    .question-de.hidden { filter: blur(10px); user-select: none; }
 
-    .btn-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
+    .btn-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .speak-btn, .reveal-btn {
       background: none;
       border: 1px solid #30363d;
       border-radius: 8px;
       color: #8b949e;
       cursor: pointer;
-      font-size: .8rem;
-      padding: 6px 14px;
+      font-size: .78rem;
+      padding: 6px 13px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: border-color .2s, color .2s;
     }
     .speak-btn:hover  { border-color: #58a6ff; color: #58a6ff; }
     .reveal-btn:hover { border-color: #e3b341; color: #e3b341; }
 
     /* Answers */
-    .answers {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .answers { display: flex; flex-direction: column; gap: 9px; }
     .answer-btn {
       background: #21262d;
       border: 1px solid #30363d;
       border-radius: 10px;
       color: #c9d1d9;
       cursor: pointer;
-      font-size: .95rem;
+      font-size: .93rem;
       line-height: 1.45;
-      padding: 14px 16px;
+      padding: 13px 15px;
       text-align: left;
       transition: background .15s, border-color .15s, color .15s;
     }
-    .answer-btn:hover:not(:disabled) {
-      background: #1f3a5f;
-      border-color: #1f6feb;
-      color: #f0f6fc;
-    }
-    .answer-btn.correct {
-      background: #1a3a1f;
-      border-color: #3fb950;
-      color: #3fb950;
-    }
-    .answer-btn.wrong {
-      background: #3a1a1a;
-      border-color: #f85149;
-      color: #f85149;
-    }
+    .answer-btn:hover:not(:disabled) { background:#1f3a5f; border-color:#1f6feb; color:#f0f6fc; }
+    .answer-btn.correct { background:#1a3a1f; border-color:#3fb950; color:#3fb950; }
+    .answer-btn.wrong   { background:#3a1a1a; border-color:#f85149; color:#f85149; }
     .answer-btn:disabled { cursor: default; }
 
     /* Feedback */
-    .feedback {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: .9rem;
-      line-height: 1.5;
-      display: none;
-    }
+    .feedback { margin-top: 16px; padding: 13px 15px; border-radius: 10px; font-size: .88rem; line-height: 1.5; display: none; }
     .feedback.show { display: block; }
-    .feedback.ok   { background: #1a3a1f; border: 1px solid #3fb950; color: #3fb950; }
-    .feedback.err  { background: #3a1a1a; border: 1px solid #f85149; color: #f85149; }
+    .feedback.ok  { background:#1a3a1f; border:1px solid #3fb950; color:#3fb950; }
+    .feedback.err { background:#3a1a1a; border:1px solid #f85149; color:#f85149; }
+
+    /* Visual box (shown after answering) */
+    .visual-box {
+      margin-top: 18px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 16px;
+      display: none;
+      text-align: center;
+    }
+    .visual-box.show { display: block; }
+    .visual-box svg  { max-width: 180px; height: auto; display: block; margin: 0 auto; }
+    .visual-label { font-size: .8rem; color: #8b949e; margin-top: 10px; }
 
     .next-btn {
-      margin-top: 18px;
+      margin-top: 16px;
       width: 100%;
       padding: 13px;
-      background: linear-gradient(135deg, #238636, #2ea043);
+      background: linear-gradient(135deg,#238636,#2ea043);
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -183,90 +150,81 @@
       transition: opacity .2s;
     }
     .next-btn:hover { opacity: .88; }
-    .next-btn.show { display: block; }
+    .next-btn.show  { display: block; }
 
-    /* ── Score screen ── */
-    .score-screen {
+    /* Start / Score screens */
+    .screen {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 14px;
-      padding: 40px 28px;
-      width: 100%;
-      max-width: 680px;
-      text-align: center;
-      display: none;
-      box-shadow: 0 8px 32px rgba(0,0,0,.4);
-    }
-    .score-screen.show { display: block; }
-    .score-emoji { font-size: 3.5rem; margin-bottom: 12px; }
-    .score-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-    .score-sub   { color: #8b949e; font-size: .95rem; margin-bottom: 24px; }
-    .score-num {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #3fb950;
-      margin-bottom: 4px;
-    }
-    .score-label { color: #8b949e; font-size: .85rem; margin-bottom: 28px; }
-    .restart-btn {
-      padding: 13px 32px;
-      background: linear-gradient(135deg, #238636, #2ea043);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-    .restart-btn:hover { opacity: .88; }
-
-    /* ── Start screen ── */
-    .start-screen {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 14px;
-      padding: 40px 28px;
+      padding: 36px 24px;
       width: 100%;
       max-width: 680px;
       text-align: center;
       box-shadow: 0 8px 32px rgba(0,0,0,.4);
     }
-    .start-screen h2 { font-size: 1.4rem; margin-bottom: 12px; }
-    .start-screen p  { color: #8b949e; font-size: .9rem; margin-bottom: 24px; line-height: 1.6; }
-    .start-btn {
-      padding: 13px 36px;
-      background: linear-gradient(135deg, #1f6feb, #388bfd);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-    .start-btn:hover { opacity: .88; }
+    .screen h2 { font-size: 1.35rem; margin-bottom: 10px; }
+    .screen p  { color: #8b949e; font-size: .88rem; margin-bottom: 22px; line-height: 1.65; }
 
-    .quiz-wrap { display: none; width: 100%; max-width: 680px; }
+    .btn-primary {
+      padding: 12px 32px;
+      background: linear-gradient(135deg,#1f6feb,#388bfd);
+      border: none; border-radius: 10px;
+      color: #fff; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: opacity .2s; margin: 4px;
+    }
+    .btn-primary:hover { opacity: .88; }
+    .btn-success {
+      padding: 12px 32px;
+      background: linear-gradient(135deg,#238636,#2ea043);
+      border: none; border-radius: 10px;
+      color: #fff; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: opacity .2s; margin: 4px;
+    }
+    .btn-success:hover { opacity: .88; }
+    .btn-warn {
+      padding: 12px 32px;
+      background: linear-gradient(135deg,#9e6a03,#e3b341);
+      border: none; border-radius: 10px;
+      color: #000; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: opacity .2s; margin: 4px;
+    }
+    .btn-warn:hover { opacity: .88; }
+
+    .score-emoji { font-size: 3.2rem; margin-bottom: 10px; }
+    .score-num   { font-size: 2.8rem; font-weight: 800; color: #3fb950; margin-bottom: 2px; }
+    .score-pct   { color: #8b949e; font-size: .85rem; margin-bottom: 22px; }
+
+    .quiz-wrap  { display: none; width: 100%; max-width: 680px; }
     .quiz-wrap.show { display: block; }
+    #scoreScreen { display: none; }
+    #scoreScreen.show { display: block; }
+    #startScreen { display: block; }
+    #startScreen.hide { display: none; }
+
+    /* Animated arrow for direction visuals */
+    @keyframes drawPath {
+      from { stroke-dashoffset: 400; }
+      to   { stroke-dashoffset: 0; }
+    }
+    .animated-arrow { stroke-dasharray: 400; animation: drawPath .7s ease forwards; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>🇩🇪 Simulado – Prova Prática de Direção</h1>
-  <p>Fahrschule Praktische Prüfung</p>
+  <div>
+    <h1 id="headerTitle">🇩🇪 Simulado de Direção</h1>
+    <p>Fahrschule Praktische Prüfung</p>
+  </div>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇬🇧 English</button>
 </header>
 
 <!-- Start -->
-<div class="start-screen" id="startScreen">
-  <h2>Pronto para começar?</h2>
-  <p>
-    Serão apresentadas perguntas em <strong>alemão</strong>, exatamente como no exame real.<br>
-    Escolha a ação correta em <strong>português</strong>.<br><br>
-    Categorias: <span style="color:#58a6ff">Instruções de direção</span> e <span style="color:#f78166">Verificação do veículo</span>.
-  </p>
-  <button class="start-btn" onclick="startQuiz()">Iniciar Simulado</button>
+<div class="screen" id="startScreen">
+  <h2 id="startTitle">Pronto para começar?</h2>
+  <p id="startDesc">Perguntas em <strong>alemão</strong>, como no exame real. A pergunta será lida automaticamente.<br>Respostas em <strong>português</strong>. Escolha a ação correta.</p>
+  <button class="btn-primary" onclick="startQuiz(false)" id="startBtn">Iniciar Simulado</button>
 </div>
 
 <!-- Quiz -->
@@ -274,364 +232,438 @@
   <div class="progress-wrap">
     <div class="progress-meta">
       <span id="progText">Pergunta 1 de X</span>
-      <span id="scoreText">✓ 0 &nbsp;✗ 0</span>
+      <span id="scoreText">✓ 0  ✗ 0</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
   </div>
-
   <div class="card" id="card">
     <span class="category-badge" id="catBadge"></span>
     <div class="question-de hidden" id="questionDE"></div>
     <div class="btn-row">
-      <button class="speak-btn" onclick="speak()">🔊 Ouvir em alemão</button>
-      <button class="reveal-btn" id="revealBtn" onclick="toggleReveal()">👁 Revelar pergunta</button>
+      <button class="speak-btn" id="speakBtn" onclick="speak()">🔊 <span id="listenLabel">Ouvir em alemão</span></button>
+      <button class="reveal-btn" id="revealBtn" onclick="toggleReveal()">👁 <span id="revealLabel">Revelar pergunta</span></button>
     </div>
     <div class="answers" id="answers"></div>
     <div class="feedback" id="feedback"></div>
-    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Próxima pergunta →</button>
+    <div class="visual-box" id="visualBox"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()"></button>
   </div>
 </div>
 
 <!-- Score -->
-<div class="score-screen" id="scoreScreen">
+<div class="screen" id="scoreScreen">
   <div class="score-emoji" id="scoreEmoji"></div>
-  <div class="score-title" id="scoreTitle"></div>
-  <div class="score-sub">Simulado concluído!</div>
-  <div class="score-num" id="scoreNum"></div>
-  <div class="score-label" id="scoreLabel"></div>
-  <button class="restart-btn" onclick="restart()">Tentar novamente</button>
+  <h2 id="scoreTitle2"></h2>
+  <p id="scoreSubtitle">Simulado concluído!</p>
+  <div class="score-num"  id="scoreNum"></div>
+  <div class="score-pct"  id="scorePct"></div>
+  <div>
+    <button class="btn-success" onclick="restart()" id="restartBtn">Tentar novamente</button>
+    <button class="btn-warn"    onclick="retryWrong()" id="retryWrongBtn" style="display:none"></button>
+  </div>
 </div>
 
 <script>
+// ── Translations ────────────────────────────────────────────────────────────
+const T = {
+  pt: {
+    headerTitle:   '🇩🇪 Simulado de Direção',
+    startTitle:    'Pronto para começar?',
+    startDesc:     'Perguntas em <strong>alemão</strong>, como no exame real. A pergunta será lida automaticamente.<br>Respostas em <strong>português</strong>. Escolha a ação correta.',
+    startBtn:      'Iniciar Simulado',
+    listenLabel:   'Ouvir em alemão',
+    revealLabel:   'Revelar pergunta',
+    hideLabel:     'Ocultar pergunta',
+    nextBtn:       'Próxima pergunta →',
+    catDriving:    'Instrução de Direção',
+    catVehicle:    'Verificação do Veículo',
+    correct:       '✓ Correto!',
+    wrong:         '✗ Incorreto. Resposta correta:',
+    scoreSubtitle: 'Simulado concluído!',
+    restartBtn:    'Tentar novamente',
+    retryWrongBtn: '⚠ Refazer erros',
+    langBtn:       '🇬🇧 English',
+    progText:      (c,t) => `Pergunta ${c} de ${t}`,
+    scoreTitle:    (p) => p>=90?'Excelente! Bestanden!':p>=70?'Bom resultado!':p>=50?'Precisa estudar mais.':'Continue praticando!',
+  },
+  en: {
+    headerTitle:   '🇩🇪 Driving Test Simulator',
+    startTitle:    'Ready to start?',
+    startDesc:     'Questions in <strong>German</strong>, just like the real exam. The question will be read aloud automatically.<br>Answers in <strong>English</strong>. Choose the correct action.',
+    startBtn:      'Start Quiz',
+    listenLabel:   'Listen in German',
+    revealLabel:   'Reveal question',
+    hideLabel:     'Hide question',
+    nextBtn:       'Next question →',
+    catDriving:    'Driving Instruction',
+    catVehicle:    'Vehicle Check',
+    correct:       '✓ Correct!',
+    wrong:         '✗ Wrong. Correct answer:',
+    scoreSubtitle: 'Quiz completed!',
+    restartBtn:    'Try again',
+    retryWrongBtn: '⚠ Redo mistakes',
+    langBtn:       '🇧🇷 Português',
+    progText:      (c,t) => `Question ${c} of ${t}`,
+    scoreTitle:    (p) => p>=90?'Excellent! Bestanden!':p>=70?'Good result!':p>=50?'Needs more study.':'Keep practicing!',
+  }
+};
+
+// ── Questions ───────────────────────────────────────────────────────────────
 const ALL_QUESTIONS = [
-  // ── INSTRUÇÕES DE DIREÇÃO ─────────────────────────────────────────────
+
+  // ── DRIVING INSTRUCTIONS ─────────────────────────────────────────────────
   {
-    cat: "driving",
-    de: "An der Ampel rechts abbiegen.",
-    answers: [
-      { pt: "Virar à DIREITA no próximo semáforo.", correct: true,
-        tip: "Abbiegen = virar | rechts = direita | Ampel = semáforo." },
-      { pt: "Virar à esquerda no próximo semáforo.", correct: false },
-      { pt: "Continuar em frente e ignorar o semáforo.", correct: false },
-      { pt: "Parar antes do semáforo e aguardar instrução.", correct: false },
+    cat:'driving', de:'An der Ampel rechts abbiegen.',
+    visual:{ type:'direction', dir:'right', label:{ pt:'Virar à direita no semáforo', en:'Turn right at the traffic light' } },
+    answers:[
+      { pt:'Virar à DIREITA no próximo semáforo.', en:'Turn RIGHT at the next traffic light.', correct:true,
+        tip:{ pt:'Abbiegen = virar | rechts = direita | Ampel = semáforo.', en:'Abbiegen = turn | rechts = right | Ampel = traffic light.' } },
+      { pt:'Virar à esquerda no próximo semáforo.', en:'Turn left at the next traffic light.', correct:false },
+      { pt:'Continuar em frente e ignorar o semáforo.', en:'Continue straight and ignore the traffic light.', correct:false },
+      { pt:'Parar antes do semáforo e aguardar instrução.', en:'Stop before the traffic light and wait for instruction.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "An der Ampel links abbiegen.",
-    answers: [
-      { pt: "Virar à ESQUERDA no próximo semáforo.", correct: true,
-        tip: "Links = esquerda. Atenção à sinalização e ao tráfego oposto." },
-      { pt: "Virar à direita no próximo semáforo.", correct: false },
-      { pt: "Fazer retorno no semáforo.", correct: false },
-      { pt: "Continuar reto até o próximo cruzamento.", correct: false },
+    cat:'driving', de:'An der Ampel links abbiegen.',
+    visual:{ type:'direction', dir:'left', label:{ pt:'Virar à esquerda no semáforo', en:'Turn left at the traffic light' } },
+    answers:[
+      { pt:'Virar à ESQUERDA no próximo semáforo.', en:'Turn LEFT at the next traffic light.', correct:true,
+        tip:{ pt:'Links = esquerda. Atenção ao tráfego oposto.', en:'Links = left. Watch for oncoming traffic.' } },
+      { pt:'Virar à direita no próximo semáforo.', en:'Turn right at the next traffic light.', correct:false },
+      { pt:'Fazer retorno no semáforo.', en:'Make a U-turn at the traffic light.', correct:false },
+      { pt:'Continuar reto até o próximo cruzamento.', en:'Continue straight to the next intersection.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Die nächste Möglichkeit rechts abbiegen.",
-    answers: [
-      { pt: "Virar à DIREITA na PRÓXIMA oportunidade possível (não precisa ser semáforo).", correct: true,
-        tip: "Nächste Möglichkeit = próxima possibilidade. Pode ser uma rua lateral qualquer." },
-      { pt: "Virar à direita somente no próximo semáforo.", correct: false },
-      { pt: "Virar à esquerda na próxima rua disponível.", correct: false },
-      { pt: "Aguardar o examinador repetir a instrução.", correct: false },
+    cat:'driving', de:'Die nächste Möglichkeit rechts abbiegen.',
+    visual:{ type:'direction', dir:'right', label:{ pt:'Próxima oportunidade à direita', en:'Next opportunity to the right' } },
+    answers:[
+      { pt:'Virar à DIREITA na PRÓXIMA oportunidade possível (não precisa ser semáforo).', en:'Turn RIGHT at the NEXT available opportunity (does not have to be a traffic light).', correct:true,
+        tip:{ pt:'Nächste Möglichkeit = próxima possibilidade. Pode ser qualquer rua lateral.', en:'Nächste Möglichkeit = next possibility. Any side street counts.' } },
+      { pt:'Virar à direita somente no próximo semáforo.', en:'Turn right only at the next traffic light.', correct:false },
+      { pt:'Virar à esquerda na próxima rua disponível.', en:'Turn left at the next available street.', correct:false },
+      { pt:'Aguardar o examinador repetir a instrução.', en:'Wait for the examiner to repeat the instruction.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Die nächste Möglichkeit links abbiegen.",
-    answers: [
-      { pt: "Virar à ESQUERDA na PRÓXIMA oportunidade possível.", correct: true,
-        tip: "Mesmo conceito: qualquer rua lateral à esquerda que aparecer primeiro." },
-      { pt: "Virar à esquerda somente em vias sinalizadas.", correct: false },
-      { pt: "Virar à direita na próxima oportunidade.", correct: false },
-      { pt: "Continuar até o examinador falar novamente.", correct: false },
+    cat:'driving', de:'Die nächste Möglichkeit links abbiegen.',
+    visual:{ type:'direction', dir:'left', label:{ pt:'Próxima oportunidade à esquerda', en:'Next opportunity to the left' } },
+    answers:[
+      { pt:'Virar à ESQUERDA na PRÓXIMA oportunidade possível.', en:'Turn LEFT at the NEXT available opportunity.', correct:true,
+        tip:{ pt:'Mesmo conceito: qualquer rua lateral à esquerda que aparecer primeiro.', en:'Same concept: any side street to the left that comes first.' } },
+      { pt:'Virar à esquerda somente em vias sinalizadas.', en:'Turn left only on signposted roads.', correct:false },
+      { pt:'Virar à direita na próxima oportunidade.', en:'Turn right at the next opportunity.', correct:false },
+      { pt:'Continuar até o examinador falar novamente.', en:'Continue until the examiner speaks again.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Auf die Autobahn Richtung Hamburg auffahren.",
-    answers: [
-      { pt: "Entrar na AUTOESTRADA (Autobahn) na direção de Hamburgo.", correct: true,
-        tip: "Auffahren = entrar (na rodovia). Richtung = direção. Respeitar a preferência da pista principal." },
-      { pt: "Sair da autoestrada na direção de Hamburgo.", correct: false },
-      { pt: "Continuar pela rodovia estadual em direção a Hamburgo.", correct: false },
-      { pt: "Parar no acostamento e aguardar instrução.", correct: false },
+    cat:'driving', de:'Auf die Autobahn Richtung Hamburg auffahren.',
+    visual:{ type:'direction', dir:'highway-on', label:{ pt:'Entrar na Autobahn → Hamburgo', en:'Enter the Autobahn → Hamburg' } },
+    answers:[
+      { pt:'Entrar na AUTOESTRADA (Autobahn) na direção de Hamburgo.', en:'Enter the MOTORWAY (Autobahn) towards Hamburg.', correct:true,
+        tip:{ pt:'Auffahren = entrar na rodovia. Respeitar a preferência da pista principal.', en:'Auffahren = to join/enter the motorway. Give way to traffic on the main lane.' } },
+      { pt:'Sair da autoestrada na direção de Hamburgo.', en:'Exit the motorway towards Hamburg.', correct:false },
+      { pt:'Continuar pela rodovia estadual em direção a Hamburgo.', en:'Continue on the state road towards Hamburg.', correct:false },
+      { pt:'Parar no acostamento e aguardar instrução.', en:'Stop on the hard shoulder and wait for instruction.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Die nächste Ausfahrt verlassen.",
-    answers: [
-      { pt: "Pegar a PRÓXIMA SAÍDA da autoestrada/via rápida.", correct: true,
-        tip: "Ausfahrt = saída. Verlassen = sair/deixar. Sinalizar e reduzir na rampa." },
-      { pt: "Ignorar a próxima saída e continuar na rodovia.", correct: false },
-      { pt: "Parar no acostamento antes da saída.", correct: false },
-      { pt: "Reduzir a velocidade mas permanecer na pista principal.", correct: false },
+    cat:'driving', de:'Die nächste Ausfahrt verlassen.',
+    visual:{ type:'direction', dir:'highway-off', label:{ pt:'Próxima saída da Autobahn', en:'Next motorway exit' } },
+    answers:[
+      { pt:'Pegar a PRÓXIMA SAÍDA da autoestrada/via rápida.', en:'Take the NEXT EXIT from the motorway/expressway.', correct:true,
+        tip:{ pt:'Ausfahrt = saída. Verlassen = sair/deixar. Sinalizar e reduzir velocidade na rampa.', en:'Ausfahrt = exit. Verlassen = to leave. Signal and reduce speed on the ramp.' } },
+      { pt:'Ignorar a próxima saída e continuar na rodovia.', en:'Ignore the next exit and stay on the motorway.', correct:false },
+      { pt:'Parar no acostamento antes da saída.', en:'Stop on the hard shoulder before the exit.', correct:false },
+      { pt:'Reduzir velocidade mas permanecer na pista principal.', en:'Slow down but remain on the main lane.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Die Ausfahrt Richtung Beusselstraße verlassen.",
-    answers: [
-      { pt: "Pegar a saída indicada para a BEUSSELSTRASSE.", correct: true,
-        tip: "Mesma lógica da saída anterior, mas identificada pela placa com o nome da rua de destino." },
-      { pt: "Continuar até a saída seguinte e então virar.", correct: false },
-      { pt: "Entrar na Beusselstraße pela pista principal.", correct: false },
-      { pt: "Virar à direita assim que ver a placa Beusselstraße.", correct: false },
+    cat:'driving', de:'Die Ausfahrt Richtung Beusselstraße verlassen.',
+    visual:{ type:'direction', dir:'highway-off', label:{ pt:'Saída → Beusselstraße', en:'Exit → Beusselstraße' } },
+    answers:[
+      { pt:'Pegar a saída indicada para a BEUSSELSTRASSE.', en:'Take the exit signposted towards BEUSSELSTRASSE.', correct:true,
+        tip:{ pt:'Identificada pela placa com o nome da rua de destino. Sinalizar com antecedência.', en:'Identified by the sign with the destination street name. Signal in advance.' } },
+      { pt:'Continuar até a saída seguinte e então virar.', en:'Continue to the next exit and then turn.', correct:false },
+      { pt:'Entrar na Beusselstraße pela pista principal.', en:'Enter Beusselstraße from the main lane.', correct:false },
+      { pt:'Virar à direita assim que ver a placa Beusselstraße.', en:'Turn right as soon as you see the Beusselstraße sign.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Bitte suchen Sie eine Möglichkeit zum Parken.",
-    answers: [
-      { pt: "Procurar um LOCAL PERMITIDO para estacionar e parar o veículo.", correct: true,
-        tip: "Möglichkeit zum Parken = possibilidade de estacionar. Escolher local legal, sem bloquear saída de garagem ou faixa de pedestres." },
-      { pt: "Estacionar imediatamente onde estiver.", correct: false },
-      { pt: "Parar na faixa da direita temporariamente.", correct: false },
-      { pt: "Procurar estacionamento pago somente.", correct: false },
+    cat:'driving', de:'Bitte suchen Sie eine Möglichkeit zum Parken.',
+    visual:{ type:'direction', dir:'park', label:{ pt:'Procurar local de estacionamento', en:'Look for a parking spot' } },
+    answers:[
+      { pt:'Procurar um LOCAL PERMITIDO para estacionar e parar o veículo.', en:'Find a PERMITTED SPOT to park and stop the vehicle.', correct:true,
+        tip:{ pt:'Escolher local legal, sem bloquear saída de garagem ou faixa de pedestres.', en:'Choose a legal spot — do not block driveways or pedestrian crossings.' } },
+      { pt:'Estacionar imediatamente onde estiver.', en:'Park immediately wherever you are.', correct:false },
+      { pt:'Parar na faixa da direita temporariamente.', en:'Stop temporarily in the right lane.', correct:false },
+      { pt:'Procurar estacionamento pago somente.', en:'Look for paid parking only.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Bitte suchen Sie eine Möglichkeit zum Umkehren.",
-    answers: [
-      { pt: "Procurar um local ADEQUADO para fazer RETORNO com segurança.", correct: true,
-        tip: "Umkehren = fazer retorno/meia-volta. Pode ser uma entrada de garagem, rua lateral ou área de retorno." },
-      { pt: "Fazer retorno imediatamente no local onde estiver.", correct: false },
-      { pt: "Dar marcha à ré até o ponto de partida.", correct: false },
-      { pt: "Procurar um estacionamento para virar o carro.", correct: false },
+    cat:'driving', de:'Bitte suchen Sie eine Möglichkeit zum Umkehren.',
+    visual:{ type:'direction', dir:'uturn', label:{ pt:'Procurar local para retorno', en:'Look for a place to turn around' } },
+    answers:[
+      { pt:'Procurar um local ADEQUADO para fazer RETORNO com segurança.', en:'Find a SUITABLE PLACE to make a safe U-TURN.', correct:true,
+        tip:{ pt:'Pode ser uma entrada de garagem, rua lateral ou área de retorno.', en:'Can be a driveway, side street, or turning area.' } },
+      { pt:'Fazer retorno imediatamente no local onde estiver.', en:'Make a U-turn immediately where you are.', correct:false },
+      { pt:'Dar marcha à ré até o ponto de partida.', en:'Reverse all the way back to the starting point.', correct:false },
+      { pt:'Procurar um estacionamento para virar o carro.', en:'Look for a car park to turn around.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Umkehren bitte.",
-    answers: [
-      { pt: "Fazer RETORNO o mais breve possível de forma segura.", correct: true,
-        tip: "Comando direto de retorno. Sinalizar, verificar espelhos e fazer o retorno na primeira oportunidade segura." },
-      { pt: "Parar o veículo imediatamente.", correct: false },
-      { pt: "Dar marcha à ré.", correct: false },
-      { pt: "Aguardar semáforo para fazer o retorno.", correct: false },
+    cat:'driving', de:'Umkehren bitte.',
+    visual:{ type:'direction', dir:'uturn', label:{ pt:'Fazer retorno o mais breve possível', en:'Make a U-turn as soon as safely possible' } },
+    answers:[
+      { pt:'Fazer RETORNO o mais breve possível de forma segura.', en:'Make a U-TURN as soon as safely possible.', correct:true,
+        tip:{ pt:'Sinalizar, verificar espelhos e fazer o retorno na primeira oportunidade segura.', en:'Signal, check mirrors, and turn around at the first safe opportunity.' } },
+      { pt:'Parar o veículo imediatamente.', en:'Stop the vehicle immediately.', correct:false },
+      { pt:'Dar marcha à ré.', en:'Reverse the vehicle.', correct:false },
+      { pt:'Aguardar semáforo para fazer o retorno.', en:'Wait for a traffic light to make the U-turn.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Rechts abbiegen bitte.",
-    answers: [
-      { pt: "Virar à DIREITA na próxima oportunidade segura.", correct: true,
-        tip: "Abbiegen bitte = vire, por favor. Comando simples de direção à direita." },
-      { pt: "Virar à esquerda na próxima oportunidade.", correct: false },
-      { pt: "Continuar em frente até novo aviso.", correct: false },
-      { pt: "Virar à direita somente se houver semáforo.", correct: false },
+    cat:'driving', de:'Rechts abbiegen bitte.',
+    visual:{ type:'direction', dir:'right', label:{ pt:'Virar à direita', en:'Turn right' } },
+    answers:[
+      { pt:'Virar à DIREITA na próxima oportunidade segura.', en:'Turn RIGHT at the next safe opportunity.', correct:true,
+        tip:{ pt:'Comando simples de direção à direita.', en:'Simple right-turn instruction.' } },
+      { pt:'Virar à esquerda na próxima oportunidade.', en:'Turn left at the next opportunity.', correct:false },
+      { pt:'Continuar em frente até novo aviso.', en:'Continue straight until further notice.', correct:false },
+      { pt:'Virar à direita somente se houver semáforo.', en:'Turn right only if there is a traffic light.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "Links abbiegen bitte.",
-    answers: [
-      { pt: "Virar à ESQUERDA na próxima oportunidade segura.", correct: true,
-        tip: "Comando simples de direção à esquerda. Atenção ao tráfego vindo no sentido contrário." },
-      { pt: "Virar à direita na próxima oportunidade.", correct: false },
-      { pt: "Continuar em frente até novo aviso.", correct: false },
-      { pt: "Virar à esquerda somente em via de mão única.", correct: false },
+    cat:'driving', de:'Links abbiegen bitte.',
+    visual:{ type:'direction', dir:'left', label:{ pt:'Virar à esquerda', en:'Turn left' } },
+    answers:[
+      { pt:'Virar à ESQUERDA na próxima oportunidade segura.', en:'Turn LEFT at the next safe opportunity.', correct:true,
+        tip:{ pt:'Atenção ao tráfego vindo no sentido contrário.', en:'Watch for oncoming traffic.' } },
+      { pt:'Virar à direita na próxima oportunidade.', en:'Turn right at the next opportunity.', correct:false },
+      { pt:'Continuar em frente até novo aviso.', en:'Continue straight until further notice.', correct:false },
+      { pt:'Virar à esquerda somente em via de mão única.', en:'Turn left only on one-way streets.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "An der zweiten Ampel bitte rechts abbiegen.",
-    answers: [
-      { pt: "Passar pelo primeiro semáforo e virar à DIREITA no SEGUNDO semáforo.", correct: true,
-        tip: "Zweiten = segundo/a. Contar os semáforos em sequência e virar à direita no segundo." },
-      { pt: "Virar à direita no primeiro semáforo encontrado.", correct: false },
-      { pt: "Virar à esquerda no segundo semáforo.", correct: false },
-      { pt: "Virar à direita no semáforo que estiver verde.", correct: false },
+    cat:'driving', de:'An der zweiten Ampel bitte rechts abbiegen.',
+    visual:{ type:'direction', dir:'right', label:{ pt:'2º semáforo → direita', en:'2nd traffic light → right' } },
+    answers:[
+      { pt:'Passar pelo PRIMEIRO semáforo e virar à DIREITA no SEGUNDO semáforo.', en:'Pass the FIRST traffic light and turn RIGHT at the SECOND traffic light.', correct:true,
+        tip:{ pt:'Zweiten = segundo/a. Contar os semáforos em sequência.', en:'Zweiten = second. Count the traffic lights in sequence.' } },
+      { pt:'Virar à direita no primeiro semáforo encontrado.', en:'Turn right at the first traffic light encountered.', correct:false },
+      { pt:'Virar à esquerda no segundo semáforo.', en:'Turn left at the second traffic light.', correct:false },
+      { pt:'Virar à direita no semáforo que estiver verde.', en:'Turn right at whichever traffic light is green.', correct:false },
     ]
   },
   {
-    cat: "driving",
-    de: "An der zweiten Ampel bitte links abbiegen.",
-    answers: [
-      { pt: "Passar pelo primeiro semáforo e virar à ESQUERDA no SEGUNDO semáforo.", correct: true,
-        tip: "Zweiten = segundo/a. Contar os semáforos em sequência e virar à esquerda no segundo." },
-      { pt: "Virar à esquerda no primeiro semáforo encontrado.", correct: false },
-      { pt: "Virar à direita no segundo semáforo.", correct: false },
-      { pt: "Contar dois cruzamentos e virar, com ou sem semáforo.", correct: false },
+    cat:'driving', de:'An der zweiten Ampel bitte links abbiegen.',
+    visual:{ type:'direction', dir:'left', label:{ pt:'2º semáforo → esquerda', en:'2nd traffic light → left' } },
+    answers:[
+      { pt:'Passar pelo PRIMEIRO semáforo e virar à ESQUERDA no SEGUNDO semáforo.', en:'Pass the FIRST traffic light and turn LEFT at the SECOND traffic light.', correct:true,
+        tip:{ pt:'Zweiten = segundo/a. Contar os semáforos em sequência.', en:'Zweiten = second. Count the traffic lights in sequence.' } },
+      { pt:'Virar à esquerda no primeiro semáforo encontrado.', en:'Turn left at the first traffic light encountered.', correct:false },
+      { pt:'Virar à direita no segundo semáforo.', en:'Turn right at the second traffic light.', correct:false },
+      { pt:'Contar dois cruzamentos e virar, com ou sem semáforo.', en:'Count two intersections and turn, with or without a traffic light.', correct:false },
     ]
   },
 
-  // ── VERIFICAÇÃO DO VEÍCULO ────────────────────────────────────────────
+  // ── VEHICLE CHECKS ────────────────────────────────────────────────────────
   {
-    cat: "vehicle",
-    de: "Bitte kontrollieren Sie die Kühlflüssigkeit.",
-    answers: [
-      { pt: "Verificar o nível no RESERVATÓRIO TRANSLÚCIDO do radiador (motor FRIO), entre as marcas MIN e MAX.", correct: true,
-        tip: "NUNCA abrir o radiador com o motor quente. O reservatório plástico permite ver o nível externamente." },
-      { pt: "Abrir o radiador com o motor quente e verificar o nível.", correct: false },
-      { pt: "Verificar apenas na revisão anual do carro.", correct: false },
-      { pt: "Medir com a vareta de óleo (Ölpeilstab).", correct: false },
+    cat:'vehicle', de:'Bitte kontrollieren Sie die Kühlflüssigkeit.',
+    visual:{ type:'component', part:'coolant', label:{ pt:'Reservatório de líquido de arrefecimento (verde)', en:'Coolant reservoir (green)' } },
+    answers:[
+      { pt:'Verificar o nível no RESERVATÓRIO TRANSLÚCIDO do radiador (motor FRIO), entre as marcas MIN e MAX.', en:'Check the level in the TRANSLUCENT RESERVOIR (engine COLD), between MIN and MAX marks.', correct:true,
+        tip:{ pt:'NUNCA abrir o radiador com o motor quente. O reservatório plástico permite ver o nível externamente.', en:'NEVER open the radiator cap when the engine is hot. The plastic reservoir allows external level check.' } },
+      { pt:'Abrir o radiador com o motor quente e verificar o nível.', en:'Open the radiator cap when the engine is hot and check the level.', correct:false },
+      { pt:'Verificar apenas na revisão anual do carro.', en:'Check only at the annual vehicle inspection.', correct:false },
+      { pt:'Medir com a vareta de óleo (Ölpeilstab).', en:'Measure with the oil dipstick (Ölpeilstab).', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Bitte kontrollieren Sie den Ölstand.",
-    answers: [
-      { pt: "Retirar a VARETA (Ölpeilstab), limpar, inserir totalmente, retirar e verificar se o nível está entre MIN e MAX.", correct: true,
-        tip: "Verificar com motor frio ou após 5 min desligado. A vareta tem duas marcas: mínimo e máximo." },
-      { pt: "Verificar pelo reservatório plástico translúcido ao lado do motor.", correct: false },
-      { pt: "Ligar o carro e aguardar o indicador do painel mostrar o nível.", correct: false },
-      { pt: "Verificar apenas quando a luz de óleo acender no painel.", correct: false },
+    cat:'vehicle', de:'Bitte kontrollieren Sie den Ölstand.',
+    visual:{ type:'component', part:'oil', label:{ pt:'Vareta de óleo (Ölpeilstab)', en:'Oil dipstick (Ölpeilstab)' } },
+    answers:[
+      { pt:'Retirar a VARETA (Ölpeilstab), limpar, inserir totalmente, retirar e verificar se o nível está entre MIN e MAX.', en:'Pull out the DIPSTICK (Ölpeilstab), wipe clean, reinsert fully, pull out again, check level is between MIN and MAX.', correct:true,
+        tip:{ pt:'Verificar com motor frio ou após 5 min desligado. A vareta tem duas marcas: mínimo e máximo.', en:'Check with cold engine or after 5 min off. The dipstick has two marks: minimum and maximum.' } },
+      { pt:'Verificar pelo reservatório plástico translúcido ao lado do motor.', en:'Check via the translucent plastic reservoir next to the engine.', correct:false },
+      { pt:'Ligar o carro e aguardar o indicador do painel.', en:'Start the car and wait for the dashboard indicator.', correct:false },
+      { pt:'Verificar apenas quando a luz de óleo acender no painel.', en:'Check only when the oil warning light comes on.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Bitte zeigen Sie das Scheibenwischwasser.",
-    answers: [
-      { pt: "Localizar o RESERVATÓRIO do limpador de para-brisa (ícone de jato de água) e mostrar como verificar/completar o nível.", correct: true,
-        tip: "Usar água com aditivo (Scheibenwaschmittel). No inverno, usar mistura anticongelante." },
-      { pt: "Mostrar o reservatório de líquido de arrefecimento.", correct: false },
-      { pt: "Verificar o fluído de freio.", correct: false },
-      { pt: "Usar somente água destilada pura no reservatório.", correct: false },
+    cat:'vehicle', de:'Bitte zeigen Sie das Scheibenwischwasser.',
+    visual:{ type:'component', part:'washer', label:{ pt:'Reservatório do limpador de para-brisa', en:'Windshield washer fluid reservoir' } },
+    answers:[
+      { pt:'Localizar o RESERVATÓRIO do limpador de para-brisa (ícone de jato de água) e mostrar como verificar/completar o nível.', en:'Locate the WINDSHIELD WASHER RESERVOIR (water spray icon) and show how to check/refill the level.', correct:true,
+        tip:{ pt:'Usar água com aditivo (Scheibenwaschmittel). No inverno, usar mistura anticongelante.', en:'Use water with additive (Scheibenwaschmittel). In winter, use antifreeze mixture.' } },
+      { pt:'Mostrar o reservatório de líquido de arrefecimento.', en:'Show the coolant reservoir.', correct:false },
+      { pt:'Verificar o fluído de freio.', en:'Check the brake fluid.', correct:false },
+      { pt:'Usar somente água destilada pura no reservatório.', en:'Use only pure distilled water in the reservoir.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Wo sind die Rückstrahler am Fahrzeug?",
-    answers: [
-      { pt: "Na parte TRASEIRA do veículo (vermelho) e nas laterais/rodas (laranja/amarelo) — refletem luz sem energia própria.", correct: true,
-        tip: "Rückstrahler = refletores passivos. Não emitem luz, apenas refletem. Diferentes dos Rückleuchten (lanternas ativas)." },
-      { pt: "Apenas na frente do veículo, integrados aos faróis.", correct: false },
-      { pt: "No teto do veículo para sinalização de altura.", correct: false },
-      { pt: "Apenas dentro do porta-malas como equipamento de segurança.", correct: false },
+    cat:'vehicle', de:'Wo sind die Rückstrahler am Fahrzeug?',
+    visual:{ type:'component', part:'reflectors', label:{ pt:'Refletores traseiros (vermelho) e laterais (laranja)', en:'Rear reflectors (red) and side reflectors (orange)' } },
+    answers:[
+      { pt:'Na parte TRASEIRA do veículo (vermelho) e nas laterais/rodas (laranja/amarelo) — refletem luz sem energia própria.', en:'On the REAR of the vehicle (red) and on the sides/wheels (orange/yellow) — they reflect light without their own power.', correct:true,
+        tip:{ pt:'Rückstrahler = refletores passivos. Não emitem luz, apenas refletem. Diferentes dos Rückleuchten (lanternas ativas).', en:'Rückstrahler = passive reflectors. They do not emit light, only reflect. Different from Rückleuchten (active rear lights).' } },
+      { pt:'Apenas na frente do veículo, integrados aos faróis.', en:'Only at the front of the vehicle, integrated into the headlights.', correct:false },
+      { pt:'No teto do veículo para sinalização de altura.', en:'On the roof of the vehicle for height signalling.', correct:false },
+      { pt:'Apenas dentro do porta-malas como equipamento de segurança.', en:'Only inside the boot as safety equipment.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist die Mindestprofiltiefe bei Reifen?",
-    answers: [
-      { pt: "1,6 mm — profundidade mínima legal do sulco do pneu.", correct: true,
-        tip: "Abaixo de 1,6 mm é ilegal e perigoso. Os especialistas recomendam trocar com 3 mm por segurança." },
-      { pt: "2,4 mm", correct: false },
-      { pt: "3,0 mm", correct: false },
-      { pt: "0,8 mm", correct: false },
+    cat:'vehicle', de:'Was ist die Mindestprofiltiefe bei Reifen?',
+    visual:{ type:'component', part:'tire', label:{ pt:'Profundidade mínima do sulco: 1,6 mm', en:'Minimum tread depth: 1.6 mm' } },
+    answers:[
+      { pt:'1,6 mm — profundidade mínima legal do sulco do pneu.', en:'1.6 mm — minimum legal tread depth.', correct:true,
+        tip:{ pt:'Abaixo de 1,6 mm é ilegal. Especialistas recomendam trocar com 3 mm por segurança.', en:'Below 1.6 mm is illegal. Experts recommend replacing at 3 mm for safety.' } },
+      { pt:'2,4 mm', en:'2.4 mm', correct:false },
+      { pt:'3,0 mm', en:'3.0 mm', correct:false },
+      { pt:'0,8 mm', en:'0.8 mm', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was bedeutet das Alpine-Zeichen (3PMSF) auf Winterreifen?",
-    answers: [
-      { pt: "Símbolo de MONTANHA COM FLOCO DE NEVE: certifica que o pneu foi testado e aprovado para condições severas de neve e inverno.", correct: true,
-        tip: "3PMSF = Three-Peak Mountain Snow Flake. É obrigatório na Alemanha em condições de neve/gelo. M+S sem este símbolo não é suficiente." },
-      { pt: "Etiqueta azul que indica pneu para baixas temperaturas.", correct: false },
-      { pt: "Código de velocidade W, válido apenas em neve.", correct: false },
-      { pt: "Símbolo M+S básico sem certificação adicional.", correct: false },
+    cat:'vehicle', de:'Was bedeutet das Alpine-Zeichen (3PMSF) auf Winterreifen?',
+    visual:{ type:'component', part:'alpine', label:{ pt:'Símbolo Alpine (3PMSF)', en:'Alpine symbol (3PMSF)' } },
+    answers:[
+      { pt:'Símbolo de MONTANHA COM FLOCO DE NEVE: certifica que o pneu foi aprovado para condições severas de neve e inverno.', en:'MOUNTAIN WITH SNOWFLAKE symbol: certifies the tyre is approved for severe snow and winter conditions.', correct:true,
+        tip:{ pt:'3PMSF = Three-Peak Mountain Snow Flake. M+S sem este símbolo não é suficiente na Alemanha.', en:'3PMSF = Three-Peak Mountain Snow Flake. M+S without this symbol is not sufficient in Germany.' } },
+      { pt:'Etiqueta azul que indica pneu para baixas temperaturas.', en:'Blue label indicating a tyre for low temperatures.', correct:false },
+      { pt:'Código de velocidade W, válido apenas em neve.', en:'Speed code W, valid only in snow.', correct:false },
+      { pt:'Símbolo M+S básico sem certificação adicional.', en:'Basic M+S symbol without additional certification.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist das Standlicht?",
-    answers: [
-      { pt: "LUZ DE POSIÇÃO: pequenas luzes dianteiras e traseiras que indicam a presença do veículo sem iluminar a via.", correct: true,
-        tip: "Usado em condições de pouca luminosidade ou estacionamento em via pública. Não substitui o farol baixo." },
-      { pt: "Luz de freio — acende automaticamente ao frear.", correct: false },
-      { pt: "Farol de neblina dianteiro.", correct: false },
-      { pt: "Luz de ré que acende ao engatar ré.", correct: false },
+    cat:'vehicle', de:'Was ist das Standlicht?',
+    visual:{ type:'light', icon:'standlicht', color:'#58a6ff', label:{ pt:'Luz de posição / estacionamento', en:'Position / parking light' } },
+    answers:[
+      { pt:'LUZ DE POSIÇÃO: pequenas luzes dianteiras e traseiras que indicam a presença do veículo sem iluminar a via.', en:'POSITION LIGHT: small front and rear lights that indicate the vehicle\'s presence without illuminating the road.', correct:true,
+        tip:{ pt:'Usado em baixa luminosidade ou estacionamento em via pública. Não substitui o farol baixo.', en:'Used in low light or when parked on a public road. Does not replace the low beam.' } },
+      { pt:'Luz de freio — acende automaticamente ao frear.', en:'Brake light — comes on automatically when braking.', correct:false },
+      { pt:'Farol de neblina dianteiro.', en:'Front fog light.', correct:false },
+      { pt:'Luz de ré que acende ao engatar ré.', en:'Reverse light that comes on when reverse gear is engaged.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist das Abblendlicht?",
-    answers: [
-      { pt: "FAROL BAIXO: iluminação padrão para direção noturna, regulada para não ofuscar motoristas que vêm no sentido contrário.", correct: true,
-        tip: "Obrigatório à noite e em túneis. Abblenden = reduzir/dimmer. Diferente do Fernlicht (farol alto)." },
-      { pt: "Farol alto — para estradas sem iluminação pública.", correct: false },
-      { pt: "Farol de neblina dianteiro.", correct: false },
-      { pt: "Luz de posição/estacionamento.", correct: false },
+    cat:'vehicle', de:'Was ist das Abblendlicht?',
+    visual:{ type:'light', icon:'abblendlicht', color:'#58a6ff', label:{ pt:'Farol baixo', en:'Low beam (dipped headlight)' } },
+    answers:[
+      { pt:'FAROL BAIXO: iluminação padrão para direção noturna, regulada para não ofuscar quem vem no sentido contrário.', en:'LOW BEAM (dipped headlight): standard night driving light, angled to avoid dazzling oncoming drivers.', correct:true,
+        tip:{ pt:'Obrigatório à noite e em túneis. Abblenden = reduzir/dimmer.', en:'Required at night and in tunnels. Abblenden = to dip/dim.' } },
+      { pt:'Farol alto — para estradas sem iluminação pública.', en:'High beam — for roads without public lighting.', correct:false },
+      { pt:'Farol de neblina dianteiro.', en:'Front fog light.', correct:false },
+      { pt:'Luz de posição/estacionamento.', en:'Position/parking light.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist der Nebelscheinwerfer?",
-    answers: [
-      { pt: "FAROL DE NEBLINA DIANTEIRO: usado em neblina densa, chuva forte ou neve para melhorar a visibilidade à frente.", correct: true,
-        tip: "Nebel = neblina. Scheinwerfer = farol. Só deve ser usado quando a visibilidade for inferior a 50 m." },
-      { pt: "Luz de neblina traseira (vermelha).", correct: false },
-      { pt: "Farol alto com filtro especial antirreflexo.", correct: false },
-      { pt: "Luz de posição adicional para zonas urbanas.", correct: false },
+    cat:'vehicle', de:'Was ist der Nebelscheinwerfer?',
+    visual:{ type:'light', icon:'nebel-front', color:'#e3b341', label:{ pt:'Farol de neblina dianteiro', en:'Front fog light' } },
+    answers:[
+      { pt:'FAROL DE NEBLINA DIANTEIRO: usado em neblina densa, chuva forte ou neve para melhorar a visibilidade à frente.', en:'FRONT FOG LIGHT: used in dense fog, heavy rain or snow to improve forward visibility.', correct:true,
+        tip:{ pt:'Nebel = neblina. Só deve ser usado quando a visibilidade for inferior a 50 m.', en:'Nebel = fog. Should only be used when visibility is below 50 m.' } },
+      { pt:'Luz de neblina traseira (vermelha).', en:'Rear fog light (red).', correct:false },
+      { pt:'Farol alto com filtro especial antirreflexo.', en:'High beam with special anti-glare filter.', correct:false },
+      { pt:'Luz de posição adicional para zonas urbanas.', en:'Additional position light for urban areas.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist die Nebelschlussleuchte?",
-    answers: [
-      { pt: "LUZ DE NEBLINA TRASEIRA (vermelha intensa): aumenta a visibilidade traseira do veículo em neblina densa.", correct: true,
-        tip: "Schluss = traseiro/fim. Apenas 1 ou 2 luzes vermelhas extras na traseira. Não confundir com Bremsleuchte (freio)." },
-      { pt: "Farol de neblina dianteiro.", correct: false },
-      { pt: "Luz de freio adicional de alta intensidade.", correct: false },
-      { pt: "Luz de emergência piscante da traseira.", correct: false },
+    cat:'vehicle', de:'Was ist die Nebelschlussleuchte?',
+    visual:{ type:'light', icon:'nebel-rear', color:'#f85149', label:{ pt:'Luz de neblina traseira', en:'Rear fog light' } },
+    answers:[
+      { pt:'LUZ DE NEBLINA TRASEIRA (vermelha intensa): aumenta a visibilidade traseira do veículo em neblina densa.', en:'REAR FOG LIGHT (intense red): increases the rear visibility of the vehicle in dense fog.', correct:true,
+        tip:{ pt:'Schluss = traseiro. Não confundir com Bremsleuchte (luz de freio).', en:'Schluss = rear. Do not confuse with Bremsleuchte (brake light).' } },
+      { pt:'Farol de neblina dianteiro.', en:'Front fog light.', correct:false },
+      { pt:'Luz de freio adicional de alta intensidade.', en:'Additional high-intensity brake light.', correct:false },
+      { pt:'Luz de emergência piscante da traseira.', en:'Flashing emergency light at the rear.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist das Fernlicht?",
-    answers: [
-      { pt: "FAROL ALTO: usada em estradas escuras sem tráfego próximo. Deve ser apagado ao encontrar outros veículos.", correct: true,
-        tip: "Fern = longo/distante. Obrigação de reduzir para Abblendlicht (farol baixo) quando há veículo à frente ou em sentido contrário." },
-      { pt: "Farol baixo reforçado para autoestrada.", correct: false },
-      { pt: "Farol de neblina de longa distância.", correct: false },
-      { pt: "Luz de cruzamento especial para interseções.", correct: false },
+    cat:'vehicle', de:'Was ist das Fernlicht?',
+    visual:{ type:'light', icon:'fernlicht', color:'#58a6ff', label:{ pt:'Farol alto', en:'High beam (full beam)' } },
+    answers:[
+      { pt:'FAROL ALTO: usado em estradas escuras sem tráfego próximo. Deve ser apagado ao encontrar outros veículos.', en:'HIGH BEAM (full beam): used on dark roads with no nearby traffic. Must be switched off when meeting other vehicles.', correct:true,
+        tip:{ pt:'Fern = longo/distante. Reduzir para Abblendlicht quando há veículo à frente ou em sentido contrário.', en:'Fern = far/long distance. Switch to Abblendlicht when there is a vehicle ahead or oncoming.' } },
+      { pt:'Farol baixo reforçado para autoestrada.', en:'Reinforced low beam for motorway use.', correct:false },
+      { pt:'Farol de neblina de longa distância.', en:'Long-range fog light.', correct:false },
+      { pt:'Luz de cruzamento especial para interseções.', en:'Special crossing light for intersections.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Was ist die Lichthupe?",
-    answers: [
-      { pt: "PISCA DO FAROL ALTO (flash): sinal luminoso momentâneo feito com o farol alto para alertar outros motoristas.", correct: true,
-        tip: "Lichthupe ≠ buzina. É um sinal de aviso luminoso. Usado para alertar sobre ultrapassagens ou perigos. Não para intimidar." },
-      { pt: "Buzina luminosa integrada ao painel.", correct: false },
-      { pt: "Luz de emergência piscante (pisca-alerta).", correct: false },
-      { pt: "Farol alto com sinal sonoro integrado.", correct: false },
+    cat:'vehicle', de:'Was ist die Lichthupe?',
+    visual:{ type:'light', icon:'lichthupe', color:'#58a6ff', label:{ pt:'Pisca do farol alto (flash)', en:'Headlight flash (Lichthupe)' } },
+    answers:[
+      { pt:'PISCA DO FAROL ALTO (flash): sinal luminoso momentâneo feito com o farol alto para alertar outros motoristas.', en:'HEADLIGHT FLASH: a brief flash of the high beam to warn other road users.', correct:true,
+        tip:{ pt:'Lichthupe ≠ buzina. É um sinal de aviso luminoso — não para intimidar.', en:'Lichthupe ≠ horn. It is a light warning signal — not for intimidating others.' } },
+      { pt:'Buzina luminosa integrada ao painel.', en:'Light-up horn integrated into the dashboard.', correct:false },
+      { pt:'Luz de emergência piscante (pisca-alerta).', en:'Flashing emergency light (hazard warning).', correct:false },
+      { pt:'Farol alto com sinal sonoro integrado.', en:'High beam with integrated sound signal.', correct:false },
     ]
   },
   {
-    cat: "vehicle",
-    de: "Wann benutzt man das Warnblinklicht? (SUPA)",
-    answers: [
-      { pt: "Stau (congestionamento), Unfall (acidente), Panne (pane/avaria), Abschleppen (reboque) — situações de emergência ou risco.", correct: true,
-        tip: "SUPA é o acrônimo para memorizar os 4 casos. Nunca usar para parar brevemente em zona proibida." },
-      { pt: "Somente em caso de acidente com vítimas.", correct: false },
-      { pt: "Ao parar brevemente em zona de carga e descarga.", correct: false },
-      { pt: "Sempre que estiver dirigindo lentamente.", correct: false },
+    cat:'vehicle', de:'Wann benutzt man das Warnblinklicht? (SUPA)',
+    visual:{ type:'light', icon:'warnblink', color:'#e3b341', label:{ pt:'SUPA: Stau · Unfall · Panne · Abschleppen', en:'SUPA: Stau · Unfall · Panne · Abschleppen' } },
+    answers:[
+      { pt:'Stau (congestionamento), Unfall (acidente), Panne (pane/avaria), Abschleppen (reboque) — situações de emergência ou risco.', en:'Stau (traffic jam), Unfall (accident), Panne (breakdown), Abschleppen (towing) — emergency or danger situations.', correct:true,
+        tip:{ pt:'SUPA é o acrônimo para memorizar os 4 casos. Nunca usar para parar em zona proibida.', en:'SUPA is the acronym to remember the 4 cases. Never use it just to stop in a no-stopping zone.' } },
+      { pt:'Somente em caso de acidente com vítimas.', en:'Only in case of an accident with casualties.', correct:false },
+      { pt:'Ao parar brevemente em zona de carga e descarga.', en:'When stopping briefly in a loading/unloading zone.', correct:false },
+      { pt:'Sempre que estiver dirigindo lentamente.', en:'Whenever you are driving slowly.', correct:false },
     ]
   },
 ];
 
-// ── State ──────────────────────────────────────────────────────────────────
-let questions = [];
-let current = 0;
-let correct = 0;
-let wrong = 0;
-let answered = false;
+// ── State ───────────────────────────────────────────────────────────────────
+let lang          = 'pt';
+let questions     = [];
+let current       = 0;
+let correct       = 0;
+let wrong         = 0;
+let answered      = false;
+let wrongQuestions= [];
+let retryMode     = false;
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
 function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+  for (let i = arr.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
   }
   return arr;
 }
 
-function startQuiz() {
-  // Shuffle questions and their answers
-  questions = shuffle([...ALL_QUESTIONS]).map(q => ({
-    ...q,
-    answers: shuffle([...q.answers])
-  }));
-  current = 0; correct = 0; wrong = 0;
+function t(key) { return T[lang][key]; }
 
-  document.getElementById('startScreen').style.display = 'none';
+function applyLang() {
+  document.getElementById('headerTitle').textContent  = t('headerTitle');
+  document.getElementById('startTitle').textContent   = t('startTitle');
+  document.getElementById('startDesc').innerHTML      = t('startDesc');
+  document.getElementById('startBtn').textContent     = t('startBtn');
+  document.getElementById('langBtn').textContent      = t('langBtn');
+  document.getElementById('listenLabel').textContent  = t('listenLabel');
+  document.getElementById('revealLabel').textContent  = t('revealLabel');
+}
+
+// ── Quiz flow ────────────────────────────────────────────────────────────────
+function startQuiz(wrongOnly) {
+  retryMode = wrongOnly;
+  const pool = wrongOnly ? wrongQuestions : ALL_QUESTIONS;
+  questions = shuffle([...pool]).map(q => ({ ...q, answers: shuffle([...q.answers]) }));
+  current = 0; correct = 0; wrong = 0; wrongQuestions = [];
+
+  document.getElementById('startScreen').classList.add('hide');
+  document.getElementById('scoreScreen').classList.remove('show');
   document.getElementById('quizWrap').classList.add('show');
   renderQuestion();
+}
+
+function restart() {
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('startScreen').classList.remove('hide');
+}
+
+function retryWrong() {
+  startQuiz(true);
 }
 
 function renderQuestion() {
@@ -639,57 +671,58 @@ function renderQuestion() {
   const q = questions[current];
   const total = questions.length;
 
-  // Progress
-  document.getElementById('progText').textContent = `Pergunta ${current + 1} de ${total}`;
+  document.getElementById('progText').textContent = t('progText')(current+1, total);
   document.getElementById('scoreText').textContent = `✓ ${correct}  ✗ ${wrong}`;
-  document.getElementById('progFill').style.width = `${(current / total) * 100}%`;
+  document.getElementById('progFill').style.width = `${(current/total)*100}%`;
 
-  // Badge
   const badge = document.getElementById('catBadge');
-  badge.className = 'category-badge ' + (q.cat === 'driving' ? 'cat-driving' : 'cat-vehicle');
-  badge.textContent = q.cat === 'driving' ? 'Instrução de Direção' : 'Verificação do Veículo';
+  badge.className = 'category-badge ' + (q.cat==='driving' ? 'cat-driving' : 'cat-vehicle');
+  badge.textContent = q.cat==='driving' ? t('catDriving') : t('catVehicle');
 
-  // Question — hidden by default
   const qEl = document.getElementById('questionDE');
   qEl.textContent = q.de;
   qEl.classList.add('hidden');
-  const revealBtn = document.getElementById('revealBtn');
-  revealBtn.textContent = '👁 Revelar pergunta';
 
-  // Answers
+  const revealBtn = document.getElementById('revealBtn');
+  document.getElementById('revealLabel').textContent = t('revealLabel');
+  revealBtn.querySelector('span').textContent = t('revealLabel');
+
   const wrap = document.getElementById('answers');
   wrap.innerHTML = '';
   q.answers.forEach((a, i) => {
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
-    btn.textContent = a.pt;
+    btn.textContent = a[lang];
     btn.onclick = () => selectAnswer(i);
     wrap.appendChild(btn);
   });
 
-  // Reset feedback
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback';
-  fb.textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('visualBox').className = 'visual-box';
+  document.getElementById('visualBox').innerHTML = '';
   document.getElementById('nextBtn').className = 'next-btn';
+  document.getElementById('nextBtn').textContent = t('nextBtn');
+
+  // Auto-play TTS
+  setTimeout(() => speak(), 400);
 }
 
 function toggleReveal() {
   const qEl = document.getElementById('questionDE');
-  const revealBtn = document.getElementById('revealBtn');
+  const span = document.getElementById('revealLabel');
   if (qEl.classList.contains('hidden')) {
     qEl.classList.remove('hidden');
-    revealBtn.textContent = '🙈 Ocultar pergunta';
+    span.textContent = t('hideLabel');
   } else {
     qEl.classList.add('hidden');
-    revealBtn.textContent = '👁 Revelar pergunta';
+    span.textContent = t('revealLabel');
   }
 }
 
 function selectAnswer(idx) {
   if (answered) return;
   answered = true;
-
   const q = questions[current];
   const chosen = q.answers[idx];
   const buttons = document.querySelectorAll('.answer-btn');
@@ -697,73 +730,236 @@ function selectAnswer(idx) {
   buttons.forEach((btn, i) => {
     btn.disabled = true;
     if (q.answers[i].correct) btn.classList.add('correct');
-    else if (i === idx && !chosen.correct) btn.classList.add('wrong');
+    else if (i===idx && !chosen.correct) btn.classList.add('wrong');
   });
 
   const fb = document.getElementById('feedback');
+  const tip = chosen.tip ? chosen.tip[lang] : null;
   if (chosen.correct) {
     correct++;
     fb.className = 'feedback ok show';
-    fb.innerHTML = '✓ Correto! ' + (chosen.tip ? `<br><small>${chosen.tip}</small>` : '');
+    fb.innerHTML = t('correct') + (tip ? `<br><small>${tip}</small>` : '');
   } else {
     wrong++;
+    wrongQuestions.push(q);
     const correctAns = q.answers.find(a => a.correct);
     fb.className = 'feedback err show';
-    fb.innerHTML = `✗ Incorreto. Resposta correta: <strong>${correctAns.pt}</strong>${correctAns.tip ? `<br><small>${correctAns.tip}</small>` : ''}`;
+    fb.innerHTML = `${t('wrong')} <strong>${correctAns[lang]}</strong>${correctAns.tip ? `<br><small>${correctAns.tip[lang]}</small>` : ''}`;
   }
 
   document.getElementById('scoreText').textContent = `✓ ${correct}  ✗ ${wrong}`;
+  renderVisual(q);
   document.getElementById('nextBtn').className = 'next-btn show';
 }
 
 function nextQuestion() {
   current++;
-  if (current >= questions.length) {
-    showScore();
-  } else {
-    renderQuestion();
-  }
+  if (current >= questions.length) showScore();
+  else renderQuestion();
 }
 
 function showScore() {
   document.getElementById('quizWrap').classList.remove('show');
-  const screen = document.getElementById('scoreScreen');
-  screen.classList.add('show');
-
   const pct = Math.round((correct / questions.length) * 100);
-  let emoji, title;
-  if (pct >= 90)      { emoji = '🏆'; title = 'Excelente! Bestanden!'; }
-  else if (pct >= 70) { emoji = '👍'; title = 'Bom resultado! Quase lá.'; }
-  else if (pct >= 50) { emoji = '📚'; title = 'Precisa estudar mais.'; }
-  else                { emoji = '💪'; title = 'Continue praticando!'; }
-
-  document.getElementById('scoreEmoji').textContent = emoji;
-  document.getElementById('scoreTitle').textContent = title;
-  document.getElementById('scoreNum').textContent = `${correct} / ${questions.length}`;
-  document.getElementById('scoreLabel').textContent = `${pct}% de acerto`;
+  document.getElementById('scoreEmoji').textContent  = pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('scoreTitle2').textContent = t('scoreTitle')(pct);
+  document.getElementById('scoreSubtitle').textContent = t('scoreSubtitle');
+  document.getElementById('scoreNum').textContent    = `${correct} / ${questions.length}`;
+  document.getElementById('scorePct').textContent    = `${pct}%`;
+  document.getElementById('restartBtn').textContent  = t('restartBtn');
+  const retryBtn = document.getElementById('retryWrongBtn');
+  retryBtn.textContent = t('retryWrongBtn');
+  retryBtn.style.display = wrongQuestions.length > 0 ? 'inline-block' : 'none';
+  document.getElementById('scoreScreen').classList.add('show');
 }
 
-function restart() {
-  document.getElementById('scoreScreen').classList.remove('show');
-  startQuiz();
+// ── Language toggle ──────────────────────────────────────────────────────────
+function toggleLang() {
+  lang = lang==='pt' ? 'en' : 'pt';
+  applyLang();
 }
 
-// ── Text-to-speech (German) ─────────────────────────────────────────────
+// ── TTS ──────────────────────────────────────────────────────────────────────
 function speak() {
   if (!window.speechSynthesis) return;
-  const text = questions[current].de;
+  const text = questions[current]?.de;
+  if (!text) return;
   const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'de-DE';
-  utt.rate = 0.9;
-  // Try to pick a German voice
+  utt.lang = 'de-DE'; utt.rate = 0.88;
   const voices = speechSynthesis.getVoices();
   const deVoice = voices.find(v => v.lang.startsWith('de'));
   if (deVoice) utt.voice = deVoice;
   speechSynthesis.cancel();
   speechSynthesis.speak(utt);
 }
-// Load voices async (Chrome)
 if (window.speechSynthesis) speechSynthesis.getVoices();
+
+// ── Visual renderer ──────────────────────────────────────────────────────────
+function renderVisual(q) {
+  if (!q.visual) return;
+  const box = document.getElementById('visualBox');
+  const v = q.visual;
+  let html = '';
+  if      (v.type==='direction') html = directionSVG(v.dir);
+  else if (v.type==='light')     html = lightSVG(v.icon, v.color);
+  else if (v.type==='component') html = componentSVG(v.part);
+  if (html) {
+    box.innerHTML = html + `<div class="visual-label">${v.label[lang]}</div>`;
+    box.classList.add('show');
+  }
+}
+
+function directionSVG(dir) {
+  const road = '#2d333b', line = '#555', arrow = '#3fb950', w = 4;
+  const svgs = {
+    right:`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="60" y="0"  width="40" height="160" fill="${road}"/>
+      <rect x="60" y="60" width="100" height="40"  fill="${road}"/>
+      <line x1="80" y1="0"  x2="80" y2="52" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <line x1="112" y1="80" x2="160" y2="80" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M80,148 L80,80 Q80,66 94,66 L150,66" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="150,58 150,74 162,66" fill="${arrow}"/>
+    </svg>`,
+    left:`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="60"  y="0"   width="40" height="160" fill="${road}"/>
+      <rect x="0"   y="60"  width="100" height="40"  fill="${road}"/>
+      <line x1="80"  y1="0"   x2="80"  y2="52" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <line x1="48"  y1="80"  x2="0"   y2="80" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M80,148 L80,80 Q80,66 66,66 L10,66" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="10,58 10,74 -2,66" fill="${arrow}"/>
+    </svg>`,
+    uturn:`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="60" y="0" width="40" height="160" fill="${road}"/>
+      <rect x="20" y="0" width="40" height="160" fill="${road}"/>
+      <line x1="80" y1="0" x2="80" y2="160" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M70,148 L70,60 Q70,30 100,30 Q130,30 130,60 L130,90 L40,90" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="40,82 40,98 28,90" fill="${arrow}"/>
+    </svg>`,
+    park:`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="60" y="0" width="40" height="160" fill="${road}"/>
+      <rect x="0"  y="0" width="60" height="160" fill="#1a2030" rx="4"/>
+      <line x1="80" y1="0" x2="80" y2="160" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M80,148 L80,90 L40,90" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="20" y="75" font-size="36" font-weight="bold" fill="${arrow}" font-family="sans-serif" text-anchor="middle">P</text>
+      <polygon points="40,82 40,98 28,90" fill="${arrow}"/>
+    </svg>`,
+    'highway-on':`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="90" y="0"  width="70" height="160" fill="${road}"/>
+      <rect x="0"  y="100" width="120" height="60"  fill="${road}"/>
+      <line x1="125" y1="0" x2="125" y2="160" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M20,130 Q80,130 110,80 L110,10" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="102,10 118,10 110,-2" fill="${arrow}"/>
+    </svg>`,
+    'highway-off':`<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="160" height="160" fill="#161b22" rx="8"/>
+      <rect x="0" y="0"  width="70" height="160" fill="${road}"/>
+      <rect x="40" y="100" width="120" height="60" fill="${road}"/>
+      <line x1="35" y1="0" x2="35" y2="160" stroke="${line}" stroke-width="2" stroke-dasharray="8,6"/>
+      <path class="animated-arrow" d="M35,10 L35,80 Q35,130 80,130 L155,130" stroke="${arrow}" fill="none" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="155,122 155,138 167,130" fill="${arrow}"/>
+    </svg>`,
+  };
+  return svgs[dir] || '';
+}
+
+function lightSVG(icon, color) {
+  const bg = '#0d1117';
+  const icons = {
+    standlicht:`<svg viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="70" fill="${bg}" rx="8"/>
+      <circle cx="50" cy="35" r="12" fill="none" stroke="${color}" stroke-width="4"/>
+      <line x1="50" y1="10" x2="50" y2="17" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="50" y1="53" x2="50" y2="60" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="25" y1="35" x2="32" y2="35" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="68" y1="35" x2="75" y2="35" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="32" y1="17" x2="37" y2="22" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="63" y1="48" x2="68" y2="53" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="68" y1="17" x2="63" y2="22" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="37" y1="48" x2="32" y2="53" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+    </svg>`,
+    abblendlicht:`<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="70" fill="${bg}" rx="8"/>
+      <ellipse cx="32" cy="35" rx="18" ry="22" fill="none" stroke="${color}" stroke-width="3"/>
+      <line x1="22" y1="35" x2="22" y2="35"/>
+      <line x1="52" y1="20" x2="105" y2="30" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="30" x2="105" y2="40" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="40" x2="105" y2="50" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="35" x2="52" y2="50" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+    </svg>`,
+    fernlicht:`<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="70" fill="${bg}" rx="8"/>
+      <ellipse cx="32" cy="35" rx="18" ry="22" fill="none" stroke="${color}" stroke-width="3"/>
+      <line x1="52" y1="23" x2="112" y2="23" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="35" x2="112" y2="35" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="47" x2="112" y2="47" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+    </svg>`,
+    lichthupe:`<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="70" fill="${bg}" rx="8"/>
+      <ellipse cx="32" cy="35" rx="18" ry="22" fill="none" stroke="${color}" stroke-width="3"/>
+      <line x1="52" y1="23" x2="112" y2="23" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="35" x2="112" y2="35" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52" y1="47" x2="112" y2="47" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <text x="80" y="16" font-size="11" fill="${color}" font-family="sans-serif" text-anchor="middle" font-weight="bold">FLASH</text>
+    </svg>`,
+    'nebel-front':`<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="70" fill="${bg}" rx="8"/>
+      <ellipse cx="32" cy="35" rx="18" ry="22" fill="none" stroke="${color}" stroke-width="3"/>
+      <path d="M55,25 Q60,32 55,39 Q60,46 55,53" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <line x1="62" y1="22" x2="105" y2="30" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="33" x2="105" y2="41" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="44" x2="105" y2="52" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+    </svg>`,
+    'nebel-rear':`<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="70" fill="${bg}" rx="8"/>
+      <rect x="8" y="13" width="36" height="44" rx="4" fill="none" stroke="${color}" stroke-width="3"/>
+      <rect x="14" y="19" width="24" height="32" rx="2" fill="${color}" opacity="0.3"/>
+      <path d="M50,22 Q56,30 50,38 Q56,46 50,54" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <line x1="58" y1="22" x2="105" y2="30" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="58" y1="35" x2="105" y2="43" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="58" y1="48" x2="105" y2="56" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+    </svg>`,
+    warnblink:`<svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="90" fill="${bg}" rx="8"/>
+      <polygon points="50,8 92,78 8,78" fill="none" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+      <text x="50" y="68" font-size="38" font-weight="bold" fill="${color}" font-family="sans-serif" text-anchor="middle">!</text>
+    </svg>`,
+  };
+  return icons[icon] || '';
+}
+
+function componentSVG(part) {
+  // Side-view car silhouette with highlighted part
+  const car = `
+    <path d="M20,70 L20,52 Q22,40 35,35 L55,28 L85,28 L105,35 Q118,40 120,52 L120,70 Z" fill="#21262d" stroke="#444" stroke-width="1.5"/>
+    <circle cx="38" cy="70" r="11" fill="#111" stroke="#555" stroke-width="2"/>
+    <circle cx="38" cy="70" r="5"  fill="#222"/>
+    <circle cx="102" cy="70" r="11" fill="#111" stroke="#555" stroke-width="2"/>
+    <circle cx="102" cy="70" r="5" fill="#222"/>
+    <rect x="56" y="30" width="46" height="18" rx="3" fill="#1a2a3a" stroke="#2a4a6a" stroke-width="1"/>
+  `;
+  const highlights = {
+    coolant:   `<ellipse cx="30" cy="48" rx="12" ry="8" fill="#3fb95066" stroke="#3fb950" stroke-width="2"/>`,
+    oil:       `<ellipse cx="45" cy="50" rx="10" ry="6" fill="#e3b34166" stroke="#e3b341" stroke-width="2"/>`,
+    washer:    `<ellipse cx="35" cy="44" rx="10" ry="6" fill="#58a6ff66" stroke="#58a6ff" stroke-width="2"/>`,
+    reflectors:`<rect x="115" y="52" width="6" height="12" rx="2" fill="#f8514966" stroke="#f85149" stroke-width="2"/>
+                <rect x="19"  y="52" width="6" height="12" rx="2" fill="#e3b34166" stroke="#e3b341" stroke-width="2"/>`,
+    tire:      `<circle cx="38"  cy="70" r="11" fill="none" stroke="#3fb950" stroke-width="3"/>
+                <circle cx="102" cy="70" r="11" fill="none" stroke="#3fb950" stroke-width="3"/>`,
+    alpine:    `<circle cx="38"  cy="70" r="11" fill="none" stroke="#58a6ff" stroke-width="3"/>
+                <circle cx="102" cy="70" r="11" fill="none" stroke="#58a6ff" stroke-width="3"/>
+                <text x="70" y="42" font-size="14" fill="#58a6ff" font-family="sans-serif" text-anchor="middle">🏔❄</text>`,
+  };
+  return `<svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg">
+    <rect width="140" height="90" fill="#0d1117" rx="8"/>
+    ${car}
+    ${highlights[part]||''}
+  </svg>`;
+}
 </script>
 </body>
 </html>
