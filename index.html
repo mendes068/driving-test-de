@@ -74,24 +74,13 @@
     .answer-btn.wrong   { background:#3a1a1a; border-color:#f85149; color:#f85149; }
     .answer-btn:disabled { cursor: default; }
 
-    /* Learn mode: show answer button */
-    .show-answer-btn {
-      width: 100%; padding: 18px;
-      background: linear-gradient(135deg,#1f3a5f,#1f6feb);
-      border: 1px solid #1f6feb; border-radius: 12px;
-      color: #fff; font-size: 1.05rem; font-weight: 600;
-      cursor: pointer; transition: opacity .2s; letter-spacing: .3px;
-    }
-    .show-answer-btn:hover { opacity: .88; }
-
-    /* Learn mode: answer reveal box */
+    /* Learn mode: answer box */
     .learn-answer {
       background: #1a3a1f; border: 1px solid #3fb950;
       border-radius: 12px; padding: 16px 18px;
       font-size: 1rem; color: #3fb950; line-height: 1.5;
-      display: none; margin-top: 14px;
+      margin-top: 14px;
     }
-    .learn-answer.show { display: block; }
     .learn-answer small { display: block; margin-top: 6px; color: #6e9f6e; font-size: .82rem; }
 
     /* Feedback (test mode) */
@@ -233,8 +222,7 @@
     <div class="answers" id="answers"></div>
     <div class="feedback" id="feedback"></div>
     <!-- learn mode -->
-    <button class="show-answer-btn" id="showAnswerBtn" onclick="showLearnAnswer()" style="display:none"></button>
-    <div class="learn-answer" id="learnAnswer"></div>
+    <div class="learn-answer" id="learnAnswer" style="display:none"></div>
     <!-- shared -->
     <div class="visual-box" id="visualBox"></div>
     <button class="next-btn" id="nextBtn" onclick="nextQuestion()"></button>
@@ -265,7 +253,6 @@ const T = {
     learnCardTitle:'Modo Aprendizado', learnCardDesc:'Ouça a pergunta, pense, revele a resposta e o visual. Sem pontuação.',
     modeBadgeTest:'Modo Teste', modeBadgeLearn:'Modo Aprendizado',
     listenLabel:'Ouvir em alemão', revealLabel:'Revelar pergunta', hideLabel:'Ocultar pergunta',
-    showAnswerBtn:'🔍 Mostrar Resposta',
     nextBtn:'Próxima pergunta →', lastBtn:'Ver resultado →',
     nextLearnBtn:'Próxima →',
     catDriving:'Instrução de Direção', catVehicle:'Verificação do Veículo',
@@ -284,7 +271,6 @@ const T = {
     learnCardTitle:'Learning Mode', learnCardDesc:'Listen, think, reveal the answer and visual. No score.',
     modeBadgeTest:'Test Mode', modeBadgeLearn:'Learning Mode',
     listenLabel:'Listen in German', revealLabel:'Reveal question', hideLabel:'Hide question',
-    showAnswerBtn:'🔍 Show Answer',
     nextBtn:'Next question →', lastBtn:'See results →',
     nextLearnBtn:'Next →',
     catDriving:'Driving Instruction', catVehicle:'Vehicle Check',
@@ -414,7 +400,7 @@ const ALL_QUESTIONS = [
     ]},
   // VEHICLE
   { cat:'vehicle', de:'Bitte kontrollieren Sie die Kühlflüssigkeit.',
-    visual:{type:'component',part:'coolant',label:{pt:'Reservatório de arrefecimento — capô aberto, motor FRIO',en:'Coolant reservoir — hood open, engine COLD'}},
+    visual:{type:'image',src:'img/coolant.png',label:{pt:'Reservatório de arrefecimento — capô aberto, motor FRIO',en:'Coolant reservoir — hood open, engine COLD'}},
     answers:[
       {pt:'Verificar o nível no RESERVATÓRIO TRANSLÚCIDO (motor FRIO), entre as marcas MIN e MAX.',en:'Check the level in the TRANSLUCENT RESERVOIR (engine COLD), between MIN and MAX marks.',correct:true,tip:{pt:'NUNCA abrir o radiador com motor quente. O reservatório plástico permite ver externamente.',en:'NEVER open the radiator cap when hot. The plastic reservoir allows external level check.'}},
       {pt:'Abrir o radiador com o motor quente e verificar.',en:'Open the radiator cap when hot and check.',correct:false},
@@ -430,7 +416,7 @@ const ALL_QUESTIONS = [
       {pt:'Verificar apenas quando a luz de óleo acender.',en:'Check only when the oil warning light comes on.',correct:false},
     ]},
   { cat:'vehicle', de:'Bitte zeigen Sie das Scheibenwischwasser.',
-    visual:{type:'component',part:'washer',label:{pt:'Reservatório do limpador (ícone de jato)',en:'Washer fluid reservoir (spray icon)'}},
+    visual:{type:'image',src:'img/washer.png',label:{pt:'Reservatório do limpador de para-brisa',en:'Windshield washer fluid reservoir'}},
     answers:[
       {pt:'Mostrar o RESERVATÓRIO do limpador de para-brisa (ícone de jato de água) e como verificar/completar.',en:'Show the WINDSHIELD WASHER RESERVOIR (spray icon) and how to check/refill it.',correct:true,tip:{pt:'Usar água com aditivo. No inverno, usar mistura anticongelante.',en:'Use water with additive. In winter, use antifreeze mixture.'}},
       {pt:'Mostrar o reservatório de líquido de arrefecimento.',en:'Show the coolant reservoir.',correct:false},
@@ -583,8 +569,8 @@ function renderQuestion(){
   document.getElementById('feedback').textContent='';
   document.getElementById('visualBox').className='visual-box';
   document.getElementById('visualBox').innerHTML='';
-  document.getElementById('learnAnswer').className='learn-answer';
-  document.getElementById('learnAnswer').innerHTML='';
+  const la=document.getElementById('learnAnswer');
+  la.style.display='none'; la.innerHTML='';
   document.getElementById('nextBtn').className='next-btn';
   const nextLast = current===total-1;
   document.getElementById('nextBtn').textContent = mode==='learn'
@@ -592,10 +578,8 @@ function renderQuestion(){
     : (nextLast ? t('lastBtn') : t('nextBtn'));
 
   const answersDiv=document.getElementById('answers');
-  const showBtn=document.getElementById('showAnswerBtn');
 
   if(mode==='test'){
-    showBtn.style.display='none';
     answersDiv.style.display='flex';
     answersDiv.innerHTML='';
     q.answers.forEach((a,i)=>{
@@ -605,10 +589,15 @@ function renderQuestion(){
       answersDiv.appendChild(btn);
     });
   } else {
+    // Learn mode: show answer + visual immediately
     answersDiv.style.display='none';
     answersDiv.innerHTML='';
-    showBtn.style.display='block';
-    showBtn.textContent=t('showAnswerBtn');
+    const ca=q.answers.find(a=>a.correct);
+    la.style.display='block';
+    la.className='learn-answer fade-in';
+    la.innerHTML=`<strong>${ca[lang]}</strong>${ca.tip?`<small>${ca.tip[lang]}</small>`:''}`;
+    renderVisual(q);
+    document.getElementById('nextBtn').className='next-btn show';
   }
 
   setTimeout(()=>speak(), 400);
@@ -646,17 +635,6 @@ function selectAnswer(idx){
   document.getElementById('nextBtn').className='next-btn show';
 }
 
-// ── Learn mode answer ─────────────────────────────────────────────────────────
-function showLearnAnswer(){
-  const q=questions[current];
-  const ca=q.answers.find(a=>a.correct);
-  document.getElementById('showAnswerBtn').style.display='none';
-  const la=document.getElementById('learnAnswer');
-  la.className='learn-answer show fade-in';
-  la.innerHTML=`<strong>${ca[lang]}</strong>${ca.tip?`<small>${ca.tip[lang]}</small>`:''}`;
-  renderVisual(q);
-  document.getElementById('nextBtn').className='next-btn show';
-}
 
 function nextQuestion(){
   current++;
@@ -701,6 +679,7 @@ function renderVisual(q){
   if     (v.type==='direction') html=directionSVG(v.dir);
   else if(v.type==='light')     html=lightSVG(v.icon,v.color);
   else if(v.type==='component') html=componentSVG(v.part);
+  else if(v.type==='image')     html=`<img src="${v.src}" alt="${v.label[lang]}" style="max-width:100%;border-radius:8px;">`;
   if(html){ box.innerHTML=html+`<div class="visual-label">${v.label[lang]}</div>`; box.classList.add('show'); }
 }
 
